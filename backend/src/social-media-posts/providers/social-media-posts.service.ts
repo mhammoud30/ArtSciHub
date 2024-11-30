@@ -1,0 +1,62 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SocialMediaPost } from '../social-media-post.entity';
+import { Repository } from 'typeorm';
+import { CreateSocialMediaPostDto } from '../dtos/create-social-media-post.dto';
+import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
+import { CreateSocialMediaPostProvider } from './create-social-media-post.provider';
+
+@Injectable()
+export class SocialMediaPostsService {
+  constructor(
+    /**
+     * Inject the social media post repository
+     */
+    @InjectRepository(SocialMediaPost)
+    private readonly socialMediaPostRepository: Repository<SocialMediaPost>,
+    /**
+     * Inject create post provider
+     */
+    private readonly createSocialMediaPostProvider: CreateSocialMediaPostProvider,
+  ) {}
+
+  public async create(
+    createSocialMediaPostDto: CreateSocialMediaPostDto,
+    user: ActiveUserData,
+  ) {
+    return this.createSocialMediaPostProvider.create(
+      createSocialMediaPostDto,
+      user,
+    );
+  }
+  /**
+   * Find all social media posts
+   */
+  public async findAll(): Promise<SocialMediaPost[]> {
+    return this.socialMediaPostRepository.find();
+  }
+
+  /**
+   * Find social media post by id
+   */
+  public async findOneById(id: number): Promise<SocialMediaPost> {
+    return this.socialMediaPostRepository.findOneBy({ id });
+  }
+
+  /**
+   * Delete social media post by id
+   */
+  public async delete(id: number) {
+    const post = await this.findOneById(id);
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+    await this.socialMediaPostRepository.delete(post);
+
+    return { message: 'Post deleted', id };
+  }
+
+  /**
+   * Update a social media post
+   */
+}
