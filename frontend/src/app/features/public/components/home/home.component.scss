@@ -262,7 +262,7 @@
 
       .precision {
         font-family: 'Courier New', monospace;
-        color: rgba($secondary-color, 0.95);
+        color: rgba($peach-color, 0.95);
         text-shadow: 0 0 10px rgba($accent-color, 0.3);
         position: relative;
 
@@ -296,11 +296,6 @@
       transform: translate(-50%, -50%);
       width: 200px;
       height: 200px;
-      background: radial-gradient(
-        circle,
-        rgba($accent-color, 0.1) 0%,
-        transparent 70%
-      );
       pointer-events: none;
     }
 
