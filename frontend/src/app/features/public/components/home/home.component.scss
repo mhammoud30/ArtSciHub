@@ -1,11 +1,5 @@
 // Import global variables
-//@use "../../../../../styles.scss" as *;
-
-$primary-color: #1d1d3b;
-$secondary-color: #ffffff;
-$accent-color: #4d4dff;
-$tech-grid-color: rgba(77, 77, 255, 0.05);
-$glow-color: rgba(77, 77, 255, 0.2);
+@use "../../../../../styles.scss" as *;
 
 @keyframes pulse {
   0%, 100% { opacity: 0.3; }
@@ -24,12 +18,66 @@ $glow-color: rgba(77, 77, 255, 0.2);
   100% { transform: translateY(100%); opacity: 0; }
 }
 
+@keyframes glitch {
+  0% {
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(-5px, 5px);
+  }
+  20% {
+    clip-path: inset(15% 0 65% 0);
+    transform: translate(5px, -5px);
+  }
+  40% {
+    clip-path: inset(75% 0 5% 0);
+    transform: translate(-5px, 5px);
+  }
+  60% {
+    clip-path: inset(35% 0 45% 0);
+    transform: translate(5px, -5px);
+  }
+  80% {
+    clip-path: inset(85% 0 15% 0);
+    transform: translate(-5px, 5px);
+  }
+  100% {
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(5px, -5px);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
 .home-container {
   position: relative;
   min-height: 100vh;
   width: 100%;
   background: linear-gradient(135deg, $primary-color, darken($primary-color, 5%));
   overflow: hidden;
+
+  // Scanline effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba($accent-color, 0.03),
+      transparent
+    );
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+  }
 
   // Tech grid background
   &::before {
@@ -47,23 +95,30 @@ $glow-color: rgba(77, 77, 255, 0.2);
     pointer-events: none;
   }
 
-  // Animated data streams
-  &::after {
-    content: '';
+  .binary-rain {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 40px,
-      rgba($accent-color, 0.02) 40px,
-      rgba($accent-color, 0.02) 41px
-    );
-    mask-image: linear-gradient(transparent 0%, black 40%, black 60%, transparent 100%);
+    width: 100%;
+    height: 100%;
     pointer-events: none;
+    opacity: 0.1;
+    font-family: monospace;
+
+    .binary {
+      position: absolute;
+      color: $accent-color;
+      font-size: 14px;
+      animation: data-stream 8s linear infinite;
+      width: 20px;
+      text-align: center;
+
+      @for $i from 1 through 15 {
+        &:nth-child(#{$i}) {
+          left: #{random(100)}#{"%"};
+          animation-delay: #{random(8000)}ms;
+          animation-duration: #{random(3000) + 5000}ms;
+        }
+      }
+    }
   }
 
   .data-particles {
@@ -105,21 +160,68 @@ $glow-color: rgba(77, 77, 255, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    // Tech circuit lines
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(
+          circle at 50% 50%,
+          rgba($accent-color, 0.1) 0%,
+          transparent 1%
+        );
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: -1;
+    }
   }
 
   .header {
     margin-bottom: 4rem;
     text-align: center;
+    position: relative;
 
     .logo {
       width: clamp(200px, 25vw, 300px);
       height: auto;
       margin-bottom: 2rem;
       filter: drop-shadow(0 0 20px $glow-color);
-      transition: transform 0.3s ease;
+      transition: all 0.3s ease;
+      position: relative;
 
       &:hover {
         transform: scale(1.05);
+        filter: drop-shadow(0 0 30px rgba($accent-color, 0.4));
+      }
+
+      // Glitch effect on hover
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        animation: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      &:hover::before {
+        animation: glitch 0.3s infinite;
+        opacity: 0.5;
+      }
+
+      &:hover::after {
+        animation: glitch 0.3s infinite reverse;
+        opacity: 0.5;
       }
     }
 
@@ -129,6 +231,7 @@ $glow-color: rgba(77, 77, 255, 0.2);
       color: $secondary-color;
       line-height: 1.4;
       letter-spacing: 1px;
+      position: relative;
 
       .creative {
         background: linear-gradient(45deg, $accent-color, lighten($accent-color, 20%));
@@ -182,6 +285,24 @@ $glow-color: rgba(77, 77, 255, 0.2);
     display: flex;
     gap: 2rem;
     margin-top: 2rem;
+    position: relative;
+
+    // Glow effect behind buttons
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(
+        circle,
+        rgba($accent-color, 0.1) 0%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
 
     .cta-button {
       background: rgba($accent-color, 0.1);
@@ -209,12 +330,30 @@ $glow-color: rgba(77, 77, 255, 0.2);
         z-index: -1;
       }
 
+      // Tech corner accents
+      &::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid $accent-color;
+        border-right: 2px solid $accent-color;
+        top: -2px;
+        right: -2px;
+        transition: all 0.3s ease;
+      }
+
       &:hover {
         color: $secondary-color;
         box-shadow: 0 0 20px rgba($accent-color, 0.4);
 
         &::before {
           transform: translate(-50%, -50%) rotate(45deg) translateY(0);
+        }
+
+        &::after {
+          width: 15px;
+          height: 15px;
         }
       }
 
@@ -223,13 +362,20 @@ $glow-color: rgba(77, 77, 255, 0.2);
       }
     }
   }
-}
 
-// Add this to your HTML
-.data-particles {
-  @for $i from 1 through 20 {
-    .particle:nth-child(#{$i}) {
-      left: #{random(100)}#{"%"};
+  // Responsive enhancements
+  @media (max-width: 768px) {
+    .binary-rain {
+      display: none;
+    }
+
+    .data-particles {
+      opacity: 0.5;
+    }
+
+    .cta-section {
+      flex-direction: column;
+      align-items: center;
     }
   }
 }
