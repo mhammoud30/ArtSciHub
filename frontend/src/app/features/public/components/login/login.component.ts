@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  Math = Math;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router
+
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -26,6 +32,6 @@ export class LoginComponent {
   }
 
   closeLogin() {
-    // Handle closing logic
+    this.router.navigate(['']);
   }
 }

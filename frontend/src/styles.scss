@@ -4,3 +4,16 @@ $accent-color: #4d4dff;
 $tech-grid-color: rgba(77, 77, 255, 0.05);
 $glow-color: rgba(77, 77, 255, 0.2);
 $error-color: #ff4d4d;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
