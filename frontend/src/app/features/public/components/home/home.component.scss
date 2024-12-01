@@ -1,0 +1,235 @@
+// Import global variables
+//@use "../../../../../styles.scss" as *;
+
+$primary-color: #1d1d3b;
+$secondary-color: #ffffff;
+$accent-color: #4d4dff;
+$tech-grid-color: rgba(77, 77, 255, 0.05);
+$glow-color: rgba(77, 77, 255, 0.2);
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes tech-grid-flow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes data-stream {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.home-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, $primary-color, darken($primary-color, 5%));
+  overflow: hidden;
+
+  // Tech grid background
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image:
+      linear-gradient(90deg, $tech-grid-color 1px, transparent 1px),
+      linear-gradient(0deg, $tech-grid-color 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: tech-grid-flow 20s linear infinite;
+    pointer-events: none;
+  }
+
+  // Animated data streams
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 40px,
+      rgba($accent-color, 0.02) 40px,
+      rgba($accent-color, 0.02) 41px
+    );
+    mask-image: linear-gradient(transparent 0%, black 40%, black 60%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .data-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    .particle {
+      position: absolute;
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba($accent-color, 0.3),
+        transparent
+      );
+      animation: data-stream 3s linear infinite;
+
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+          left: #{random(100)}#{"%"};
+          animation-delay: #{random(3000)}ms;
+          height: #{random(60) + 40}px;
+          opacity: #{random(6) + 2 * 0.1};
+        }
+      }
+    }
+  }
+
+  .content-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header {
+    margin-bottom: 4rem;
+    text-align: center;
+
+    .logo {
+      width: clamp(200px, 25vw, 300px);
+      height: auto;
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 0 20px $glow-color);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    .slogan {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 300;
+      color: $secondary-color;
+      line-height: 1.4;
+      letter-spacing: 1px;
+
+      .creative {
+        background: linear-gradient(45deg, $accent-color, lighten($accent-color, 20%));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 500;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -5px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: $accent-color;
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover::after {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+      }
+
+      .precision {
+        font-family: 'Courier New', monospace;
+        color: rgba($secondary-color, 0.95);
+        text-shadow: 0 0 10px rgba($accent-color, 0.3);
+        position: relative;
+
+        &::before {
+          content: '<';
+          opacity: 0.6;
+          margin-right: 0.3em;
+        }
+
+        &::after {
+          content: '/>';
+          opacity: 0.6;
+          margin-left: 0.3em;
+        }
+      }
+    }
+  }
+
+  .cta-section {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+
+    .cta-button {
+      background: rgba($accent-color, 0.1);
+      color: $secondary-color;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 1.2rem 3rem;
+      border: 2px solid $accent-color;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150%;
+        height: 150%;
+        background: $accent-color;
+        transform: translate(-50%, -50%) rotate(45deg) translateY(100%);
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: -1;
+      }
+
+      &:hover {
+        color: $secondary-color;
+        box-shadow: 0 0 20px rgba($accent-color, 0.4);
+
+        &::before {
+          transform: translate(-50%, -50%) rotate(45deg) translateY(0);
+        }
+      }
+
+      &:active {
+        transform: translateY(2px);
+      }
+    }
+  }
+}
+
+// Add this to your HTML
+.data-particles {
+  @for $i from 1 through 20 {
+    .particle:nth-child(#{$i}) {
+      left: #{random(100)}#{"%"};
+    }
+  }
+}
