@@ -62,7 +62,11 @@ export class SignInProvider {
     const accessToken = await this.jwtService.signAsync(
       {
         sub: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        avatar: user.avatarUrl,
         email: user.email,
+        role: user.role,
       },
       {
         audience: this.jwtConfiguration.audience,

@@ -1,1 +1,23 @@
-<p>list works!</p>
+<div class="list-brands-container">
+  <h1>Brand List</h1>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  <table *ngIf="brands.length > 0; else noData" class="brand-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Vertical</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let brand of brands; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ brand.name }}</td>
+        <td>{{ brand.vertical }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noData>
+    <p>No brands found. Please add some brands.</p>
+  </ng-template>
+</div>

@@ -12,6 +12,12 @@ export const PORTAL_ROUTES: Routes = [
         loadComponent: () =>
           import('./components/brands/brands.component')
             .then(m => m.BrandsComponent)
+      },
+      {
+        path: 'social-media-posts',
+        loadComponent: () =>
+          import('./components/social-media-posts/social-media-posts.component')
+            .then(m => m.SocialMediaPostsComponent)
       }
     ]
   }

@@ -1,0 +1,216 @@
+// create-brand.component.scss
+@use '../../../../../../styles.scss' as *;
+
+@keyframes form-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes input-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba($accent-color, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba($accent-color, 0.4);
+  }
+}
+
+.create-brand-container {
+  background: darken($primary-color, 5%);
+  border-radius: 16px;
+  padding: 3rem;
+  width: 95%;
+  max-width: 600px;
+  margin: 2rem auto;
+  position: relative;
+  animation: form-entrance 0.5s ease forwards;
+
+  // Tech border effect
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid $accent-color;
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  &::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+  }
+
+  // Scanline effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba($accent-color, 0.03),
+      transparent
+    );
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+  }
+
+  h1 {
+    color: $secondary-color;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 1px;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 2px;
+      background: $accent-color;
+      margin: 1rem auto;
+      box-shadow: 0 0 10px rgba($accent-color, 0.5);
+    }
+  }
+
+  form {
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: $secondary-color;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .form-control {
+        width: 100%;
+        background: rgba($accent-color, 0.1);
+        border: 1px solid rgba($accent-color, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        color: $secondary-color;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $accent-color;
+          box-shadow: 0 0 15px rgba($accent-color, 0.2);
+          animation: input-glow 2s infinite;
+        }
+
+        &.ng-invalid.ng-touched {
+          border-color: #ff4d4d;
+          animation: none;
+        }
+
+        &::placeholder {
+          color: rgba($secondary-color, 0.4);
+        }
+      }
+
+      select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23${encodeURIComponent($accent-color)}%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 12px;
+        padding-right: 2.5rem;
+
+        option {
+          background: darken($primary-color, 5%);
+          color: $secondary-color;
+        }
+      }
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 1rem;
+      background: transparent;
+      border: 2px solid $accent-color;
+      border-radius: 8px;
+      color: $secondary-color;
+      font-size: 1rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 200%;
+        height: 200%;
+        background: $accent-color;
+        transform: translate(-50%, -50%) rotate(45deg) translateY(100%);
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 0;
+      }
+
+      span {
+        position: relative;
+        z-index: 1;
+      }
+
+      &:hover:not(:disabled) {
+        box-shadow: 0 0 20px rgba($accent-color, 0.4);
+
+        &::before {
+          transform: translate(-50%, -50%) rotate(45deg) translateY(0);
+        }
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        border-color: rgba($accent-color, 0.3);
+      }
+    }
+  }
+
+  .message {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: $accent-color;
+    font-family: 'Courier New', monospace;
+    animation: form-entrance 0.3s ease forwards;
+  }
+}
+
+@media (max-width: 768px) {
+  .create-brand-container {
+    padding: 2rem;
+    margin: 1rem;
+    width: auto;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+}

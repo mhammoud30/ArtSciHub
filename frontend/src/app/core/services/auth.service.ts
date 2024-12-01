@@ -1,50 +1,66 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, first, Observable, tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 interface LoginResponse {
-  token: string;
-  user: {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-  }
+  accessToken: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private readonly API_URL = 'your-api-url';
+  private readonly API_URL = 'http://localhost:3000';
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {
+  constructor(private http: HttpClient, private router: Router) {
     // Check for existing token and user data on service initialization
     const token = localStorage.getItem('auth_token');
     const userData = localStorage.getItem('user_data');
-    if (userData) {
-      this.userSubject.next(JSON.parse(userData));
+    if (userData != undefined) {
+      try {
+        this.userSubject.next(JSON.parse(userData));
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+        localStorage.removeItem('user_data'); // Optional: clear corrupted data
+      }
     }
   }
 
   login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.API_URL}/auth/login`, {
-      email,
-      password
-    }).pipe(
-      tap(response => {
-        localStorage.setItem('auth_token', response.token);
-        localStorage.setItem('user_data', JSON.stringify(response.user));
-        this.userSubject.next(response.user);
+    return this.http
+      .post<LoginResponse>(`${this.API_URL}/auth/sign-in`, {
+        email,
+        password,
       })
-    );
+      .pipe(
+        tap((response) => {
+          // Save the access token
+          localStorage.setItem('auth_token', response.accessToken);
+
+          // Decode the token to extract user data
+          const decodedToken: { sub: number; email: string; firstName: string, lastName: string , role: string } =
+            jwtDecode(response.accessToken);
+
+          // Extract only the required fields
+          const userData = {
+            id: decodedToken.sub,
+            email: decodedToken.email,
+            firstName: decodedToken.firstName,
+            lastName: decodedToken.lastName,
+            role: decodedToken.role,
+          };
+
+          // Save user data to localStorage
+          localStorage.setItem('user_data', JSON.stringify(userData));
+
+          // Update the userSubject with the current user data
+          this.userSubject.next(userData);
+        })
+      );
   }
 
   logout(): void {
@@ -60,7 +76,7 @@ export class AuthService {
 
   isAdmin(): boolean {
     const userData = this.userSubject.value;
-    return userData?.role === 'ADMIN';
+    return userData?.role === 'admin';
   }
 
   getToken(): string | null {

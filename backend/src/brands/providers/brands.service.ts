@@ -57,7 +57,9 @@ export class BrandsService {
    *  Find all brands
    */
   public async findAll(): Promise<Brand[]> {
-    return this.brandRepository.find();
+    return this.brandRepository.find({
+      relations: ['createdBy'],
+    });
   }
 
   /**
