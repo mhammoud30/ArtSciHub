@@ -42,7 +42,7 @@
     position: absolute;
     width: 25px;
     height: 25px;
-    border: 2px solid $accent-color;
+    border: 2px solid $peach-color;
   }
 
   &::before {
@@ -90,15 +90,30 @@
     align-items: center;
     z-index: 10;
     border-radius: 16px;
+    z-index: 1000; /* Adjust if Snackbar is being hidden */
 
     .loader {
       width: 50px;
       height: 50px;
-      border: 3px solid rgba($accent-color, 0.3);
-      border-top-color: $accent-color;
+      border: 3px solid rgba($peach-color, 0.3);
+      border-top-color: $peach-color;
       border-radius: 50%;
       animation: loading-spin 1s linear infinite;
     }
+  }
+
+  .mat-snack-bar-container {
+    z-index: 1100; /* Ensure Snackbar appears above spinner */
+  }
+
+  .success-snackbar {
+    background-color: #4caf50; /* Green */
+    color: white;
+  }
+
+  .error-snackbar {
+    background-color: #f44336; /* Red */
+    color: white;
   }
 
   .form-section {
@@ -109,11 +124,11 @@
     transition: all 0.3s ease;
 
     &.active {
-      border-color: rgba($accent-color, 0.4);
+      border-color: $peach-color;
       animation: section-glow 2s infinite;
 
       .section-header {
-        background: rgba($accent-color, 0.15);
+        background: linear-gradient(45deg, $accent-color, #78E6D0);
 
         .toggle-icon {
           transform: rotate(180deg);
@@ -121,6 +136,7 @@
       }
 
       .section-content {
+        margin-top: 2%;
         max-height: 1000px;
         opacity: 1;
       }
@@ -181,7 +197,7 @@
     .form-control {
       width: 100%;
       background: rgba($accent-color, 0.1);
-      border: 1px solid rgba($accent-color, 0.3);
+      border: 1px solid $peach-color;
       border-radius: 8px;
       padding: 1rem;
       color: $secondary-color;

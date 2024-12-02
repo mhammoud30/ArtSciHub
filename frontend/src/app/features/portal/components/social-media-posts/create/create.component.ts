@@ -16,12 +16,13 @@ import { ContentTone } from '../enums/content-tone.enum';
 import { CampaignObjective } from '../enums/campaign-objective.enum';
 import { BrandService } from '../../../services/brand.service';
 import { GetBrandsModel } from '../../brands/models/get-brands.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-create',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './create.component.html',
-  styleUrl: './create.component.scss'
+  styleUrl: './create.component.scss',
 })
 export class CreateComponent {
   post: CreateSocialMediaPost = {
@@ -66,14 +67,17 @@ export class CreateComponent {
     brand: true,
     content: false,
     creative: false,
+    metrics: false,
     engagement: false,
-    campaign: false
+    campaign: false,
   };
 
   constructor(
+    private snackBar: MatSnackBar,
     private socialMediaPostService: SocialMediaPostService,
-    private brandService: BrandService,
-  ) { }
+    private brandService: BrandService
+  ) {}
+
 
   ngOnInit(): void {
     this.fetchBrands();
@@ -83,7 +87,6 @@ export class CreateComponent {
     this.brandService.getBrands().subscribe(
       (response: any) => {
         this.brands = response;
-        console.log('Brands:', this.brands);
       },
       (error) => {
         console.error('Error fetching brands:', error);
@@ -111,34 +114,62 @@ export class CreateComponent {
   }
 
   onSubmit(form: any): void {
+    this.formSections = {
+      brand: false,
+      content: false,
+      creative: false,
+      metrics: false,
+      engagement: false,
+      campaign: false,
+    };
     if (form.valid && this.isFormValid()) {
       this.isLoading = true;
+      console.log('Form is valid. Sending request...');
       this.socialMediaPostService.createSocialMediaPost(this.post).subscribe(
         (response) => {
-          this.message = 'Social media post created successfully!';
-          form.reset();
-          this.isLoading = false;
-          // Reset to initial state
-          this.formSections = {
-            brand: true,
-            content: false,
-            creative: false,
-            engagement: false,
-            campaign: false
-          };
+          console.log('Post created successfully:', response);
+          this.showSnackbar('Social media post created successfully!', 'Close');
+          setTimeout(() => {
+            form.reset();
+            this.isLoading = false;
+            this.formSections = {
+              brand: true,
+              content: false,
+              creative: false,
+              metrics: false,
+              engagement: false,
+              campaign: false,
+            };
+          }, 3000);
         },
         (error) => {
           console.error('Error creating post:', error);
-          this.message = 'Failed to create post. Please try again.';
+          this.showSnackbar('Failed to create post. Please try again.', 'Dismiss', true);
           this.isLoading = false;
         }
       );
     } else {
-      this.message = 'Please fill in all required fields.';
+      console.log('Form is invalid or incomplete.');
+      this.showSnackbar('Please fill in all required fields.', 'OK', true);
     }
+  }
+
+  showSnackbar(message: string, action: string, isError: boolean = false): void {
+    console.log('Displaying Snackbar:', message);
+    this.snackBar.open(message, action, {
+      duration: isError ? 0 : 0, // 0 for errors, 5 seconds for success
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: isError ? 'error-snackbar' : 'success-snackbar',
+    });
   }
 
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
+  }
+
+  onFocus(event: Event): void {
+    // Optional: Add any additional logic here if needed.
+    console.log('Input focused:', event);
   }
 }

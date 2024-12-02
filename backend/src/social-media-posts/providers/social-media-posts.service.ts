@@ -32,8 +32,20 @@ export class SocialMediaPostsService {
   /**
    * Find all social media posts
    */
-  public async findAll(): Promise<SocialMediaPost[]> {
-    return this.socialMediaPostRepository.find();
+  public async findAll() {
+    const posts = await this.socialMediaPostRepository.find({
+      relations: ['brand', 'createdBy'],
+    });
+    return posts.map((post) => ({
+      ...post,
+      brand: {
+        name: post.brand.name,
+        vertical: post.brand.vertical,
+      },
+      createdBy: {
+        name: `${post.createdBy.firstName} ${post.createdBy.lastName}`,
+      },
+    }));
   }
 
   /**

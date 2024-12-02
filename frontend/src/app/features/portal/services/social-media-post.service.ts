@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../core/environments/environment.development';
 import { CreateSocialMediaPost } from '../components/social-media-posts/models/create-social-media-post.model';
 import { HttpClient } from '@angular/common/http';
+import { GetSocialMediaPostModel } from '../components/social-media-posts/models/get-social-media-post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,9 @@ export class SocialMediaPostService {
 
   public createSocialMediaPost(socialMediaPost: CreateSocialMediaPost) {
     return this.http.post(`${this.socialMediaPostApiUrl}`, socialMediaPost);
+  }
+
+  public getSocialMediaPosts() {
+    return this.http.get(`${this.socialMediaPostApiUrl}`);
   }
 }

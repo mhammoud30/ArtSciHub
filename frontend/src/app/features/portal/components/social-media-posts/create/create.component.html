@@ -40,18 +40,6 @@
       </div>
 
       <div class="section-content">
-        
-        <div class="form-group">
-          <label for="link">Link:</label>
-          <input
-            [(ngModel)]="post.link"
-            name="link"
-            type="url"
-            required
-            class="form-control"
-            placeholder="Enter content link"
-          />
-        </div>
         <div class="form-group">
           <label for="platform">Platform:</label>
           <select
@@ -90,6 +78,18 @@
               {{ tone }}
             </option>
           </select>
+        </div>
+
+        <div class="form-group">
+          <label for="link">Link:</label>
+          <input
+            [(ngModel)]="post.link"
+            name="link"
+            type="url"
+            required
+            class="form-control"
+            placeholder="Enter content link"
+          />
         </div>
       </div>
     </div>
@@ -170,10 +170,80 @@
       </div>
     </div>
 
+    <!-- Metrics Section -->
+    <div class="form-section" [class.active]="formSections.metrics">
+      <div class="section-header" (click)="toggleSection('metrics')">
+        <div class="section-title">04 // Metrics</div>
+        <div class="toggle-icon">↓</div>
+      </div>
+
+      <div class="section-content">
+        <div class="form-group">
+          <label for="views">Views:</label>
+          <input
+            [(ngModel)]="post.views"
+            name="views"
+            type="number"
+            required
+            class="form-control"
+            placeholder="Enter number of views"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="comments">Comments:</label>
+          <input
+            [(ngModel)]="post.comments"
+            name="comments"
+            type="number"
+            required
+            class="form-control"
+            placeholder="Enter number of comments"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="likes">Likes:</label>
+          <input
+            [(ngModel)]="post.likes"
+            name="likes"
+            type="number"
+            required
+            class="form-control"
+            placeholder="Enter number of likes"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="shares">Shares:</label>
+          <input
+            [(ngModel)]="post.shares"
+            name="shares"
+            type="number"
+            required
+            class="form-control"
+            placeholder="Enter number of shares"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="saves">Saves:</label>
+          <input
+            [(ngModel)]="post.saves"
+            name="saves"
+            type="number"
+            required
+            class="form-control"
+            placeholder="Enter number of saves"
+          />
+        </div>
+      </div>
+    </div>
+
     <!-- Campaign Details Section -->
     <div class="form-section" [class.active]="formSections.campaign">
       <div class="section-header" (click)="toggleSection('campaign')">
-        <div class="section-title">04 // Campaign Details</div>
+        <div class="section-title">05 // Campaign Details</div>
         <div class="toggle-icon">↓</div>
       </div>
 
@@ -201,10 +271,7 @@
               required
               class="form-control"
             >
-              <option
-                *ngFor="let audience of targetAudiences"
-                [value]="audience"
-              >
+              <option *ngFor="let audience of targetAudiences" [value]="audience">
                 {{ audience }}
               </option>
             </select>
@@ -232,6 +299,18 @@
             required
             class="form-control"
             placeholder="Enter call to action text"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="publishedAt">Published At:</label>
+          <input
+            [(ngModel)]="post.publishedAt"
+            name="publishedAt"
+            type="datetime-local"
+            required
+            class="form-control"
+            (focus)="onFocus($event)"
           />
         </div>
       </div>

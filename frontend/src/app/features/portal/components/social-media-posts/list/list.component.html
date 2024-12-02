@@ -1,1 +1,57 @@
-<p>list works!</p>
+<div class="post-list-container">
+  <h2 class="post-list-title">Social Media Posts</h2>
+  <div class="post-list-table-container">
+    <table class="post-list-table">
+      <thead>
+        <tr>
+          <th>Brand Name</th>
+          <th>Vertical</th>
+          <th>Platform</th>
+          <th>Thumbnail</th>
+          <th>Format</th>
+          <th>Concept</th>
+          <th>Creative Type</th>
+          <th>Sound</th>
+          <th>Audience</th>
+          <th>Duration</th>
+          <th>Views</th>
+          <th>Comments</th>
+          <th>Likes</th>
+          <th>Shares</th>
+          <th>Saves</th>
+          <th>Language</th>
+          <th>Call to Action</th>
+          <th>Published At</th>
+          <th>Content Tone</th>
+          <th>Campaign Objective</th>
+          <th>Created By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{ post.brand.name }}</td>
+          <td>{{ post.brand.vertical }}</td>
+          <td>{{ post.platform }}</td>
+          <td>{{ post.thumbnail}}</td>
+          <td>{{ post.format }}</td>
+          <td>{{ post.concept }}</td>
+          <td>{{ post.creativeType }}</td>
+          <td>{{ post.sound }}</td>
+          <td>{{ post.targetAudience }}</td>
+          <td>{{ post.duration }}</td>
+          <td>{{ post.views }}</td>
+          <td>{{ post.comments }}</td>
+          <td>{{ post.likes }}</td>
+          <td>{{ post.shares }}</td>
+          <td>{{ post.saves }}</td>
+          <td>{{ post.language }}</td>
+          <td>{{ post.callToAction }}</td>
+          <td>{{ post.publishedAt | date }}</td>
+          <td>{{ post.contentTone }}</td>
+          <td>{{ post.campaignObjective }}</td>
+          <td>{{ post.createdBy.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
