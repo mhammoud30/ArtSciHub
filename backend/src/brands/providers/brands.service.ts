@@ -56,10 +56,18 @@ export class BrandsService {
   /**
    *  Find all brands
    */
-  public async findAll(): Promise<Brand[]> {
-    return this.brandRepository.find({
+  public async findAll() {
+    const brands = await this.brandRepository.find({
       relations: ['createdBy'],
     });
+    return brands.map((brand) => ({
+      ...brand,
+      createdBy: {
+        id: brand.createdBy?.id,
+        firstName: brand.createdBy?.firstName,
+        lastName: brand.createdBy?.lastName,
+      },
+    }));
   }
 
   /**

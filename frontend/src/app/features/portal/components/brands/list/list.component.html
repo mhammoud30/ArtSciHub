@@ -7,6 +7,8 @@
         <th>#</th>
         <th>Name</th>
         <th>Vertical</th>
+        <th>Created By</th>
+        <th>Created At</th>
       </tr>
     </thead>
     <tbody>
@@ -14,6 +16,8 @@
         <td>{{ i + 1 }}</td>
         <td>{{ brand.name }}</td>
         <td>{{ brand.vertical }}</td>
+        <td>{{ brand.createdBy.firstName }} {{brand.createdBy.lastName}}</td>
+        <td>{{ brand.createdAt | date: 'medium' }}</td>
       </tr>
     </tbody>
   </table>

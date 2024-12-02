@@ -25,7 +25,7 @@ export class BrandsController {
   ) {}
 
   @Get()
-  public async findAll(): Promise<Brand[]> {
+  public async findAll() {
     return this.brandsService.findAll();
   }
 

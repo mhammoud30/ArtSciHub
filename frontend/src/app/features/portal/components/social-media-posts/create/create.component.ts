@@ -1,12 +1,144 @@
 import { Component } from '@angular/core';
-
+import { SocialMediaPostService } from '../../../services/social-media-post.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { CreateSocialMediaPost } from '../models/create-social-media-post.model';
+import { Platform } from '../enums/platform.enum';
+import { Thumbnail } from '../enums/thumbnail.enum';
+import { Format } from '../enums/format.enum';
+import { Concept } from '../enums/concept.enum';
+import { CreativeType } from '../enums/creative-type.enum';
+import { Sound } from '../enums/sound.enum';
+import { TargetAudience } from '../enums/target-audience.enum';
+import { Duration } from '../enums/duration.enum';
+import { Language } from '../enums/language.enum';
+import { ContentTone } from '../enums/content-tone.enum';
+import { CampaignObjective } from '../enums/campaign-objective.enum';
+import { BrandService } from '../../../services/brand.service';
+import { GetBrandsModel } from '../../brands/models/get-brands.model';
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 export class CreateComponent {
+  post: CreateSocialMediaPost = {
+    link: '',
+    platform: Platform.FACEBOOK,
+    thumbnail: Thumbnail.CAPTIONED_MEME,
+    format: Format.SQUARE,
+    concept: Concept.CELEBRITY_CONTENT,
+    creativeType: CreativeType.VIDEO,
+    sound: Sound.DIALOGUE,
+    targetAudience: TargetAudience.AFFINITY,
+    duration: Duration.SevenToFifteenSeconds,
+    views: 0,
+    comments: 0,
+    likes: 0,
+    shares: 0,
+    saves: 0,
+    language: Language.ENGLISH,
+    callToAction: '',
+    publishedAt: new Date(),
+    contentTone: ContentTone.EDUCATIONAL,
+    campaignObjective: CampaignObjective.AWARENESS,
+    brandId: 0,
+  };
 
+  platforms: string[] = Object.values(Platform);
+  thumbnails: string[] = Object.values(Thumbnail);
+  formats: string[] = Object.values(Format);
+  concepts: string[] = Object.values(Concept);
+  creativeTypes: string[] = Object.values(CreativeType);
+  sounds: string[] = Object.values(Sound);
+  targetAudiences: string[] = Object.values(TargetAudience);
+  durations: string[] = Object.values(Duration);
+  languages: string[] = Object.values(Language);
+  contentTones: string[] = Object.values(ContentTone);
+  campaignObjectives: string[] = Object.values(CampaignObjective);
+  brands: GetBrandsModel[] = [];
+
+  message: string = '';
+  isLoading: boolean = false;
+  formSections = {
+    brand: true,
+    content: false,
+    creative: false,
+    engagement: false,
+    campaign: false
+  };
+
+  constructor(
+    private socialMediaPostService: SocialMediaPostService,
+    private brandService: BrandService,
+  ) { }
+
+  ngOnInit(): void {
+    this.fetchBrands();
+  }
+
+  fetchBrands(): void {
+    this.brandService.getBrands().subscribe(
+      (response: any) => {
+        this.brands = response;
+        console.log('Brands:', this.brands);
+      },
+      (error) => {
+        console.error('Error fetching brands:', error);
+        this.message = 'Failed to load brands. Please try again.';
+      }
+    );
+  }
+
+  onBrandSelect(): void {
+    if (this.post.brandId) {
+      this.formSections.content = true;
+    }
+  }
+
+  toggleSection(section: keyof typeof this.formSections): void {
+    this.formSections[section] = !this.formSections[section];
+  }
+
+  isFormValid(): boolean {
+    return (
+      this.post.brandId !== 0 &&
+      this.post.link.trim() !== '' &&
+      this.post.callToAction.trim() !== ''
+    );
+  }
+
+  onSubmit(form: any): void {
+    if (form.valid && this.isFormValid()) {
+      this.isLoading = true;
+      this.socialMediaPostService.createSocialMediaPost(this.post).subscribe(
+        (response) => {
+          this.message = 'Social media post created successfully!';
+          form.reset();
+          this.isLoading = false;
+          // Reset to initial state
+          this.formSections = {
+            brand: true,
+            content: false,
+            creative: false,
+            engagement: false,
+            campaign: false
+          };
+        },
+        (error) => {
+          console.error('Error creating post:', error);
+          this.message = 'Failed to create post. Please try again.';
+          this.isLoading = false;
+        }
+      );
+    } else {
+      this.message = 'Please fill in all required fields.';
+    }
+  }
+
+  formatDate(date: Date): string {
+    return date.toISOString().split('T')[0];
+  }
 }

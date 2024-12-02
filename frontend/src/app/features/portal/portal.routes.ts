@@ -19,13 +19,19 @@ export const PORTAL_ROUTES: Routes = [
           import('./components/brands/create/create.component')
             .then(m => m.CreateComponent)
       },
-      /* {
-        path: 'social-media-posts',
+      {
+        path: 'social-media-posts/create',
         loadComponent: () =>
-          import('./components/social-media-posts/social-media-posts.component')
-          import List from '../../../../node_modules/lucide-angular/icons/list.d';
-  .then(m => m.SocialMediaPostsComponent)
-      } */
+          import('./components/social-media-posts/create/create.component')
+              .then(m => m.CreateComponent)
+      },
+      {
+        path: 'social-media-posts/view',
+        loadComponent: () =>
+          import('./components/social-media-posts/list/list.component')
+            .then(m => m.ListComponent)
+      },
+
     ]
   }
 ];

@@ -1,1 +1,255 @@
-<p>create works!</p>
+<div class="create-post-container">
+  <h1>Create Social Media Post</h1>
+
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="loader"></div>
+  </div>
+
+  <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)" class="post-form">
+    <!-- Brand Selection Section -->
+    <div class="form-section" [class.active]="formSections.brand">
+      <div class="section-header" (click)="toggleSection('brand')">
+        <div class="section-title">01 // Brand Selection</div>
+        <div class="toggle-icon">↓</div>
+      </div>
+
+      <div class="section-content">
+        <div class="form-group">
+          <label for="brandId">Brand:</label>
+          <select
+            [(ngModel)]="post.brandId"
+            name="brandId"
+            required
+            class="form-control tech-select"
+            (change)="onBrandSelect()"
+          >
+            <option [ngValue]="0">Select a Brand</option>
+            <option *ngFor="let brand of brands" [value]="brand.id">
+              {{ brand.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Details Section -->
+    <div class="form-section" [class.active]="formSections.content">
+      <div class="section-header" (click)="toggleSection('content')">
+        <div class="section-title">02 // Content Configuration</div>
+        <div class="toggle-icon">↓</div>
+      </div>
+
+      <div class="section-content">
+        
+        <div class="form-group">
+          <label for="link">Link:</label>
+          <input
+            [(ngModel)]="post.link"
+            name="link"
+            type="url"
+            required
+            class="form-control"
+            placeholder="Enter content link"
+          />
+        </div>
+        <div class="form-group">
+          <label for="platform">Platform:</label>
+          <select
+            [(ngModel)]="post.platform"
+            name="platform"
+            required
+            class="form-control"
+          >
+            <option *ngFor="let p of platforms" [value]="p">{{ p }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="language">Language:</label>
+          <select
+            [(ngModel)]="post.language"
+            name="language"
+            required
+            class="form-control"
+          >
+            <option *ngFor="let lang of languages" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="contentTone">Content Tone:</label>
+          <select
+            [(ngModel)]="post.contentTone"
+            name="contentTone"
+            required
+            class="form-control"
+          >
+            <option *ngFor="let tone of contentTones" [value]="tone">
+              {{ tone }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Creative Elements Section -->
+    <div class="form-section" [class.active]="formSections.creative">
+      <div class="section-header" (click)="toggleSection('creative')">
+        <div class="section-title">03 // Creative Elements</div>
+        <div class="toggle-icon">↓</div>
+      </div>
+
+      <div class="section-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="format">Format:</label>
+            <select
+              [(ngModel)]="post.format"
+              name="format"
+              required
+              class="form-control"
+            >
+              <option *ngFor="let f of formats" [value]="f">{{ f }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="creativeType">Creative Type:</label>
+            <select
+              [(ngModel)]="post.creativeType"
+              name="creativeType"
+              required
+              class="form-control"
+            >
+              <option *ngFor="let type of creativeTypes" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="thumbnail">Thumbnail:</label>
+            <select
+              [(ngModel)]="post.thumbnail"
+              name="thumbnail"
+              required
+              class="form-control"
+            >
+              <option *ngFor="let t of thumbnails" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="sound">Sound:</label>
+            <select
+              [(ngModel)]="post.sound"
+              name="sound"
+              required
+              class="form-control"
+            >
+              <option *ngFor="let s of sounds" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="duration">Duration:</label>
+          <select
+            [(ngModel)]="post.duration"
+            name="duration"
+            required
+            class="form-control"
+          >
+            <option *ngFor="let d of durations" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Campaign Details Section -->
+    <div class="form-section" [class.active]="formSections.campaign">
+      <div class="section-header" (click)="toggleSection('campaign')">
+        <div class="section-title">04 // Campaign Details</div>
+        <div class="toggle-icon">↓</div>
+      </div>
+
+      <div class="section-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="campaignObjective">Campaign Objective:</label>
+            <select
+              [(ngModel)]="post.campaignObjective"
+              name="campaignObjective"
+              required
+              class="form-control"
+            >
+              <option *ngFor="let obj of campaignObjectives" [value]="obj">
+                {{ obj }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="targetAudience">Target Audience:</label>
+            <select
+              [(ngModel)]="post.targetAudience"
+              name="targetAudience"
+              required
+              class="form-control"
+            >
+              <option
+                *ngFor="let audience of targetAudiences"
+                [value]="audience"
+              >
+                {{ audience }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="concept">Concept:</label>
+          <select
+            [(ngModel)]="post.concept"
+            name="concept"
+            required
+            class="form-control"
+          >
+            <option *ngFor="let c of concepts" [value]="c">{{ c }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="callToAction">Call To Action:</label>
+          <input
+            [(ngModel)]="post.callToAction"
+            name="callToAction"
+            type="text"
+            required
+            class="form-control"
+            placeholder="Enter call to action text"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        [disabled]="!postForm.valid || !isFormValid() || isLoading"
+        class="submit-btn"
+      >
+        <span class="btn-text">Initialize Post Creation</span>
+        <span class="btn-overlay"></span>
+      </button>
+    </div>
+  </form>
+
+  <div class="message" *ngIf="message">
+    {{ message }}
+  </div>
+</div>

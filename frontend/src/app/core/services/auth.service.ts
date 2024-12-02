@@ -86,4 +86,8 @@ export class AuthService {
   getCurrentUser(): any {
     return this.userSubject.value;
   }
+
+  getBaseURL(): string {
+    return this.API_URL;
+  }
 }

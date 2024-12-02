@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BrandModel } from '../models/create-brand.model';
 import { BrandService } from '../../../services/brand.service';
 import { CommonModule } from '@angular/common';
+import { GetBrandsModel } from '../models/get-brands.model';
 
 @Component({
   selector: 'app-list-brands',
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  brands: BrandModel[] = [];
+  brands: GetBrandsModel[] = [];
   errorMessage: string = '';
 
   constructor(

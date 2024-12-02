@@ -4,30 +4,43 @@
   <nav class="side-nav" [class.collapsed]="isNavCollapsed">
     <div class="nav-header">
       <button class="collapse-btn" (click)="toggleNav()">
-        <i class="fas" [ngClass]="isNavCollapsed ? 'fa-chevron-right' : 'fa-chevron-left'"></i>
+        <i
+          class="fas"
+          [ngClass]="isNavCollapsed ? 'fa-chevron-right' : 'fa-chevron-left'"
+        ></i>
       </button>
       <div class="logo-container">
         <img src="assets/images/artschihub-logo.png" alt="Logo" class="logo" />
       </div>
-
     </div>
 
     <!-- Navigation Links -->
     <ul class="nav-links">
       <!-- Brands -->
       <li>
-        <a (click)="toggleMenu('brands')" [class.active]="expandedMenu === 'brands'">
+        <a
+          (click)="toggleMenu('brands')"
+          [class.active]="expandedMenu === 'brands'"
+        >
           <i class="fas fa-tags"></i>
           <span *ngIf="!isNavCollapsed">Brands</span>
         </a>
         <ul *ngIf="expandedMenu === 'brands'" class="sub-menu">
           <li>
-            <a routerLink="/portal/brands/view-brands" routerLinkActive="active">
-              List
+            <a
+              routerLink="/portal/brands/view-brands"
+              routerLinkActive="active"
+            >
+              <i class="fas fa-list"></i>
+              View All
             </a>
           </li>
           <li>
-            <a routerLink="/portal/brands/create-brand" routerLinkActive="active">
+            <a
+              routerLink="/portal/brands/create-brand"
+              routerLinkActive="active"
+            >
+              <i class="fas fa-plus"></i>
               Create
             </a>
           </li>
@@ -36,19 +49,30 @@
 
       <!-- Social Media Posts -->
       <li>
-        <a (click)="toggleMenu('socialMediaPosts')" [class.active]="expandedMenu === 'socialMediaPosts'">
+        <a
+          (click)="toggleMenu('socialMediaPosts')"
+          [class.active]="expandedMenu === 'socialMediaPosts'"
+        >
           <i class="fas fa-share-alt"></i>
           <span *ngIf="!isNavCollapsed">Social Media Posts</span>
         </a>
         <ul *ngIf="expandedMenu === 'socialMediaPosts'" class="sub-menu">
           <li>
-            <a routerLink="/portal/social-media-posts/all" routerLinkActive="active">
-              All Posts
+            <a
+              routerLink="/portal/social-media-posts/view"
+              routerLinkActive="active"
+            >
+              <i class="fas fa-list"></i>
+              View All
             </a>
           </li>
           <li>
-            <a routerLink="/portal/social-media-posts/create" routerLinkActive="active">
-              Create Post
+            <a
+              routerLink="/portal/social-media-posts/create"
+              routerLinkActive="active"
+            >
+              <i class="fas fa-plus"></i>
+              Create
             </a>
           </li>
         </ul>
@@ -58,7 +82,10 @@
     <!-- User Profile Section -->
     <div class="user-profile">
       <div class="avatar">
-        <img [src]="user?.avatarUrl || 'assets/images/default-avatar.png'" alt="User Avatar"/>
+        <img
+          [src]="user?.avatarUrl || 'assets/images/default-avatar.png'"
+          alt="User Avatar"
+        />
       </div>
       <div class="user-info" *ngIf="!isNavCollapsed">
         <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
@@ -73,14 +100,14 @@
 
     <!-- Data Particles Effect -->
     <div class="data-particles">
-      <ng-container *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
+      <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
         <div class="particle"></div>
       </ng-container>
     </div>
 
     <!-- Binary Rain Effect -->
     <div class="binary-rain">
-      <ng-container *ngFor="let i of [1,2,3,4,5]">
+      <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
         <div class="binary">01</div>
         <div class="binary">10</div>
         <div class="binary">11</div>

@@ -17,7 +17,7 @@ import { TargetAudience } from '../enums/target-audience.enum';
 import { Duration } from '../enums/duration.enum';
 import { Language } from '../enums/language.enum';
 import { ContentTone } from '../enums/content-tone.enum';
-import { CampaignObjective } from '../enums/campaign-objective';
+import { CampaignObjective } from '../enums/campaign-objective.enum';
 
 export class CreateSocialMediaPostDto {
   @IsString()

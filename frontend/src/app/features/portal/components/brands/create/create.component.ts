@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BrandService } from '../../../services/brand.service';
-import { BrandModel } from '../models/create-brand.model';
+import { CreateBrandModel } from '../models/create-brand.model';
 import { Vertical } from '../enums/vertical.enum';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CreateComponent {
 
-  brand: BrandModel = {
+  brand: CreateBrandModel = {
     name: '',
     vertical: Vertical.FASHION,
   };
