@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, first, Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../environments/environment.';
 
 interface LoginResponse {
   accessToken: string;
@@ -12,7 +13,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:3000';
+  private readonly API_URL = environment.API_URL;
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
 

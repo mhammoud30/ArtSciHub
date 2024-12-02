@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateBrandModel } from '../components/brands/models/create-brand.model';
-import { environment } from '../../../core/environments/environment.development';
+import { environment } from '../../../core/environments/environment.';
 
 
 @Injectable({
