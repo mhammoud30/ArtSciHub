@@ -14,6 +14,8 @@ export class PortalLayoutComponent {
   isNavCollapsed = false;
   currentPageTitle = '';
   user: UserModel | null = null;
+  expandedMenu: string | null = null;
+
 
   constructor() {
     const userData = localStorage.getItem('user_data');
@@ -24,6 +26,10 @@ export class PortalLayoutComponent {
 
   toggleNav() {
     this.isNavCollapsed = !this.isNavCollapsed;
+  }
+
+  toggleMenu(menu: string) {
+    this.expandedMenu = this.expandedMenu === menu ? null : menu;
   }
 
 }

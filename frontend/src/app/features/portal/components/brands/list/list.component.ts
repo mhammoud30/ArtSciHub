@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BrandModel } from '../models/create-brand-model';
+import { BrandModel } from '../models/create-brand.model';
 import { BrandService } from '../../../services/brand.service';
 import { CommonModule } from '@angular/common';
 

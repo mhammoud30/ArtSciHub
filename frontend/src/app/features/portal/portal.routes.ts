@@ -8,17 +8,24 @@ export const PORTAL_ROUTES: Routes = [
         .then(m => m.PortalLayoutComponent),
     children: [
       {
-        path: 'brands',
+        path: 'brands/view-brands',
         loadComponent: () =>
-          import('./components/brands/brands.component')
-            .then(m => m.BrandsComponent)
+          import('./components/brands/list/list.component')
+            .then(m => m.ListComponent)
       },
       {
+        path: 'brands/create-brand',
+        loadComponent: () =>
+          import('./components/brands/create/create.component')
+            .then(m => m.CreateComponent)
+      },
+      /* {
         path: 'social-media-posts',
         loadComponent: () =>
           import('./components/social-media-posts/social-media-posts.component')
-            .then(m => m.SocialMediaPostsComponent)
-      }
+          import List from '../../../../node_modules/lucide-angular/icons/list.d';
+  .then(m => m.SocialMediaPostsComponent)
+      } */
     ]
   }
 ];

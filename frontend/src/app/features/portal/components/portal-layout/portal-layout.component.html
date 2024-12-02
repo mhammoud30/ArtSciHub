@@ -14,17 +14,44 @@
 
     <!-- Navigation Links -->
     <ul class="nav-links">
+      <!-- Brands -->
       <li>
-        <a routerLink="/portal/brands" routerLinkActive="active">
+        <a (click)="toggleMenu('brands')" [class.active]="expandedMenu === 'brands'">
           <i class="fas fa-tags"></i>
           <span *ngIf="!isNavCollapsed">Brands</span>
         </a>
+        <ul *ngIf="expandedMenu === 'brands'" class="sub-menu">
+          <li>
+            <a routerLink="/portal/brands/view-brands" routerLinkActive="active">
+              List
+            </a>
+          </li>
+          <li>
+            <a routerLink="/portal/brands/create-brand" routerLinkActive="active">
+              Create
+            </a>
+          </li>
+        </ul>
       </li>
+
+      <!-- Social Media Posts -->
       <li>
-        <a routerLink="/portal/social-media-posts" routerLinkActive="active">
+        <a (click)="toggleMenu('socialMediaPosts')" [class.active]="expandedMenu === 'socialMediaPosts'">
           <i class="fas fa-share-alt"></i>
           <span *ngIf="!isNavCollapsed">Social Media Posts</span>
         </a>
+        <ul *ngIf="expandedMenu === 'socialMediaPosts'" class="sub-menu">
+          <li>
+            <a routerLink="/portal/social-media-posts/all" routerLinkActive="active">
+              All Posts
+            </a>
+          </li>
+          <li>
+            <a routerLink="/portal/social-media-posts/create" routerLinkActive="active">
+              Create Post
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
 

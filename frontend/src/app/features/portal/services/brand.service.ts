@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BrandModel } from '../components/brands/models/create-brand-model';
+import { BrandModel } from '../components/brands/models/create-brand.model';
 
 @Injectable({
   providedIn: 'root'
