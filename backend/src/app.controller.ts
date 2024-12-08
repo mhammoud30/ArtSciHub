@@ -10,7 +10,7 @@ export class AppController {
     private readonly configService: ConfigService,
   ) {}
 
-  @Get('hello')
+  @Get('api/hello')
   @Auth(AuthType.None)
   getHello() {
     console.log(this.configService.get('appConfig.environment'));

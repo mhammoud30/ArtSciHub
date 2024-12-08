@@ -4,7 +4,7 @@ import { SignInDto } from './dtos/signin.dto';
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type.enum';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(
     /**

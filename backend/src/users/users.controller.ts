@@ -4,7 +4,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
   constructor(
     /**

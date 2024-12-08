@@ -13,7 +13,7 @@ export const routes: Routes = [
     path: 'portal',
     loadChildren: () =>
       import('./features/portal/portal.routes').then((m) => m.PORTAL_ROUTES),
-    canActivate: [() => inject(AuthService).isAuthenticated()],
+    canActivate: [() => inject(AuthService).isUser()],
   },
   {
     path: 'admin',

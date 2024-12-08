@@ -4,7 +4,7 @@ import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 import { CreateSocialMediaPostDto } from './dtos/create-social-media-post.dto';
 import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
 
-@Controller('social-media-posts')
+@Controller('api/social-media-posts')
 export class SocialMediaPostsController {
   constructor(
     /**

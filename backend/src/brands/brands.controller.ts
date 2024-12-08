@@ -15,7 +15,7 @@ import { PatchBrandDto } from './dtos/patch-brand.dto';
 import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
 import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
-@Controller('brands')
+@Controller('api/brands')
 export class BrandsController {
   constructor(
     /**

@@ -47,8 +47,8 @@ export class LoginComponent {
             this.router.navigate(['/admin']);
           }
 
-          else if(this.authService.isAuthenticated()) {
-            this.router.navigate(['/portal']);
+          else if(this.authService.isUser()) {
+            this.router.navigate(['/portal/social-media-posts/create']);
           }
 
         },

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../core/environments/environment.';
+import { environment } from '../../../core/environments/environment';
 import { CreateSocialMediaPost } from '../components/social-media-posts/models/create-social-media-post.model';
 import { HttpClient } from '@angular/common/http';
 import { GetSocialMediaPostModel } from '../components/social-media-posts/models/get-social-media-post.model';

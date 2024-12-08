@@ -7,7 +7,20 @@ import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.useStaticAssets(join(__dirname, '..', 'frontend/dist/frontend'));
+
+  // Serve static files from the Angular build
+  app.useStaticAssets(join(__dirname, '..', 'public/browser'));
+  app.setBaseViewsDir(join(__dirname, '..', 'public/browser'));
+
+  // Serve index.html for all unknown routes
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.originalUrl.startsWith('/api')) {
+      res.sendFile(join(__dirname, '..', 'public/browser', 'index.html'));
+    } else {
+      next();
+    }
+  });
+
   app.setViewEngine('html');
   /**
    * Use validation pipes globally
@@ -41,7 +54,11 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document); */
 
   app.enableCors({
-    origin: '*', // Replace '*' with the actual domain(s) if needed
+    origin: [
+      'http://localhost:4200',
+      'https://awake-adventure.up.railway.app',
+      'https://artscihub.com',
+    ], // Replace '*' with the actual domain(s) if needed
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

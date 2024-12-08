@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, first, Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
-import { environment } from '../environments/environment.';
+import { environment } from '../environments/environment';
 
 interface LoginResponse {
   accessToken: string;
@@ -71,8 +71,9 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('auth_token');
+  isUser(): boolean {
+    const userData = this.userSubject.value;
+    return userData?.role === 'user';
   }
 
   isAdmin(): boolean {
