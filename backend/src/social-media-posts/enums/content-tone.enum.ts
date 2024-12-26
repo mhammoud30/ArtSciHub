@@ -4,4 +4,5 @@ export enum ContentTone {
   EMOTIONAL = 'Emotional',
   INSPIRATIONAL = 'Inspirational',
   FORMAL = 'Formal',
+  INFORMATIONAL = 'Informational',
 }

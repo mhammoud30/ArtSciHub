@@ -1,5 +1,12 @@
-import { IsString, IsEnum, IsNotEmpty, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsEnum,
+  IsNotEmpty,
+  MaxLength,
+  IsOptional,
+} from 'class-validator';
 import { Vertical } from '../enums/vertical.enum';
+import { Market } from '../enums/market.enum';
 
 export class CreateBrandDto {
   @IsString()
@@ -10,4 +17,12 @@ export class CreateBrandDto {
   @IsEnum(Vertical)
   @IsNotEmpty()
   vertical: Vertical;
+
+  @IsString()
+  @IsOptional()
+  socialMediaLink?: string;
+
+  @IsEnum(Market)
+  @IsNotEmpty()
+  market: Market;
 }

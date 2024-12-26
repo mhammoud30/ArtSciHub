@@ -5,6 +5,7 @@ import {
   IsNumber,
   IsDate,
   Min,
+  IsBoolean,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Platform } from '../enums/platform.enum';
@@ -18,6 +19,7 @@ import { Duration } from '../enums/duration.enum';
 import { Language } from '../enums/language.enum';
 import { ContentTone } from '../enums/content-tone.enum';
 import { CampaignObjective } from '../enums/campaign-objective.enum';
+import { CallToAction } from '../enums/call-to-action.enum';
 
 export class CreateSocialMediaPostDto {
   @IsString()
@@ -26,37 +28,37 @@ export class CreateSocialMediaPostDto {
 
   @IsEnum(Platform, { message: 'Platform must be a valid enum value' })
   @IsNotEmpty()
-  platform: string;
+  platform: Platform;
 
   @IsEnum(Thumbnail, { message: 'Thumbnail must be a valid enum value' })
   @IsNotEmpty()
-  thumbnail: string;
+  thumbnail: Thumbnail;
 
   @IsEnum(Format, { message: 'Format must be a valid enum value' })
   @IsNotEmpty()
-  format: string;
+  format: Format;
 
   @IsEnum(Concept, { message: 'Concept must be a valid enum value' })
   @IsNotEmpty()
-  concept: string;
+  concept: Concept;
 
   @IsEnum(CreativeType, { message: 'Creative type must be a valid enum value' })
   @IsNotEmpty()
-  creativeType: string;
+  creativeType: CreativeType;
 
-  @IsEnum(Sound, { message: 'Sound must be a valid enum value' })
+  @IsEnum(Sound, { message: 'Sound must be a valid enum value', each: true })
   @IsNotEmpty()
-  sound: string;
+  sound: Sound[];
 
   @IsEnum(TargetAudience, {
     message: 'Target audience must be a valid enum value',
   })
   @IsNotEmpty()
-  targetAudience: string;
+  targetAudience: TargetAudience;
 
   @IsEnum(Duration, { message: 'Duration must be a valid enum value' })
   @IsNotEmpty()
-  duration: string;
+  duration: Duration;
 
   @IsNumber()
   @Min(0)
@@ -85,11 +87,21 @@ export class CreateSocialMediaPostDto {
 
   @IsEnum(Language, { message: 'Language must be a valid enum value' })
   @IsNotEmpty()
-  language: string;
+  language: Language;
 
-  @IsString()
+  @IsEnum(CallToAction, {
+    message: 'Call to action must be a valid enum value',
+  })
   @IsNotEmpty()
-  callToAction: string;
+  callToAction: CallToAction;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  promoCode: boolean;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  hook: boolean;
 
   @IsDate()
   @Type(() => Date)
@@ -98,13 +110,13 @@ export class CreateSocialMediaPostDto {
 
   @IsEnum(ContentTone, { message: 'Content tone must be a valid enum value' })
   @IsNotEmpty()
-  contentTone: string;
+  contentTone: ContentTone;
 
   @IsEnum(CampaignObjective, {
     message: 'Campaign objective must be a valid enum value',
   })
   @IsNotEmpty()
-  campaignObjective: string;
+  campaignObjective: CampaignObjective;
 
   @IsNumber()
   @IsNotEmpty()

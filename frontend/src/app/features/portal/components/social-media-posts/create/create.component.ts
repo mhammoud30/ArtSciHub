@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { SocialMediaPostService } from '../../../services/social-media-post.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -17,10 +17,16 @@ import { CampaignObjective } from '../enums/campaign-objective.enum';
 import { BrandService } from '../../../services/brand.service';
 import { GetBrandsModel } from '../../brands/models/get-brands.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CallToAction } from '../enums/call-to-action.enum';
+
+// Angular Material modules
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
 })
@@ -32,7 +38,7 @@ export class CreateComponent {
     format: Format.SQUARE,
     concept: Concept.CELEBRITY_CONTENT,
     creativeType: CreativeType.VIDEO,
-    sound: Sound.DIALOGUE,
+    sound: [],
     targetAudience: TargetAudience.AFFINITY,
     duration: Duration.SevenToFifteenSeconds,
     views: 0,
@@ -41,7 +47,9 @@ export class CreateComponent {
     shares: 0,
     saves: 0,
     language: Language.ENGLISH,
-    callToAction: '',
+    callToAction: CallToAction.BUY_NOW,
+    promoCode: false,
+    hook: false,
     publishedAt: new Date(),
     contentTone: ContentTone.EDUCATIONAL,
     campaignObjective: CampaignObjective.AWARENESS,
@@ -53,12 +61,13 @@ export class CreateComponent {
   formats: string[] = Object.values(Format);
   concepts: string[] = Object.values(Concept);
   creativeTypes: string[] = Object.values(CreativeType);
-  sounds: string[] = Object.values(Sound);
+  sounds: Sound[] = Object.values(Sound) as Sound[];
   targetAudiences: string[] = Object.values(TargetAudience);
   durations: string[] = Object.values(Duration);
   languages: string[] = Object.values(Language);
   contentTones: string[] = Object.values(ContentTone);
   campaignObjectives: string[] = Object.values(CampaignObjective);
+  callToActions: string[] = Object.values(CallToAction);
   brands: GetBrandsModel[] = [];
 
   message: string = '';
@@ -72,12 +81,14 @@ export class CreateComponent {
     campaign: false,
   };
 
+  dropdownOpen = false;
+
   constructor(
     private snackBar: MatSnackBar,
     private socialMediaPostService: SocialMediaPostService,
-    private brandService: BrandService
+    private brandService: BrandService,
+    private eRef: ElementRef
   ) {}
-
 
   ngOnInit(): void {
     this.fetchBrands();
@@ -144,7 +155,11 @@ export class CreateComponent {
         },
         (error) => {
           console.error('Error creating post:', error);
-          this.showSnackbar('Failed to create post. Please try again.', 'Dismiss', true);
+          this.showSnackbar(
+            'Failed to create post. Please try again.',
+            'Dismiss',
+            true
+          );
           this.isLoading = false;
         }
       );
@@ -154,7 +169,11 @@ export class CreateComponent {
     }
   }
 
-  showSnackbar(message: string, action: string, isError: boolean = false): void {
+  showSnackbar(
+    message: string,
+    action: string,
+    isError: boolean = false
+  ): void {
     console.log('Displaying Snackbar:', message);
     this.snackBar.open(message, action, {
       duration: isError ? 0 : 0, // 0 for errors, 5 seconds for success
@@ -172,4 +191,30 @@ export class CreateComponent {
     // Optional: Add any additional logic here if needed.
     console.log('Input focused:', event);
   }
+
+// Adjusted to ensure we treat value as Sound
+onCheckboxChange(event: Event, value: Sound) {
+  const checkbox = event.target as HTMLInputElement;
+  const checked = checkbox.checked;
+
+  if (checked) {
+    this.post.sound.push(value);
+  } else {
+    const index = this.post.sound.indexOf(value);
+    if (index > -1) {
+      this.post.sound.splice(index, 1);
+    }
+  }
+}
+
+toggleDropdown() {
+  this.dropdownOpen = !this.dropdownOpen;
+}
+
+@HostListener('document:click', ['$event'])
+clickOutside(event: Event) {
+  if (!this.eRef.nativeElement.contains(event.target)) {
+    this.dropdownOpen = false;
+  }
+}
 }

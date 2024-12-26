@@ -18,7 +18,7 @@ export interface GetSocialMediaPostModel {
   format: Format;
   concept: Concept;
   creativeType: CreativeType;
-  sound: Sound;
+  sound: Sound[];
   targetAudience: TargetAudience;
   duration: Duration;
   views: number;
@@ -30,6 +30,8 @@ export interface GetSocialMediaPostModel {
   callToAction: string;
   publishedAt: Date;
   contentTone: ContentTone;
+  promoCode: boolean;
+  hook: boolean;
   campaignObjective: CampaignObjective;
   brand : {
     name: string;

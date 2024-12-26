@@ -10,6 +10,7 @@ import {
 import { Vertical } from './enums/vertical.enum';
 import { User } from 'src/users/user.entity';
 import { SocialMediaPost } from 'src/social-media-posts/social-media-post.entity';
+import { Market } from './enums/market.enum';
 
 @Entity()
 export class Brand {
@@ -24,6 +25,16 @@ export class Brand {
     nullable: false,
   })
   vertical: Vertical;
+
+  @Column({ nullable: true })
+  socialMediaLink: string;
+
+  @Column('enum', {
+    enum: Market,
+    nullable: false,
+    default: Market.AE,
+  })
+  market: Market;
 
   @OneToMany(() => SocialMediaPost, (post) => post.brand)
   posts: SocialMediaPost[];

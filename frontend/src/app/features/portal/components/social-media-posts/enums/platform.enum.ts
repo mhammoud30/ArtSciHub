@@ -1,7 +1,8 @@
 export enum Platform {
   IG = 'IG',
   TT = 'TT',
-  YT = 'YT',
+  YOUTUBE_SHORTS = 'YouTube Shorts',
+  YOUTUBE_LONG = 'YouTube Long',
   SNAPCHAT = 'Snapchat',
   FACEBOOK = 'Facebook',
 }

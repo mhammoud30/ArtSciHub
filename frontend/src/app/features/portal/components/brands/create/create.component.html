@@ -26,6 +26,33 @@
       </select>
     </div>
 
+    <!-- Add market like vertical-->
+    <div class="form-group">
+      <label for="market">Market:</label>
+      <select
+        id="market"
+        name="market"
+        class="form-control"
+        [(ngModel)]="brand.market"
+        required
+      >
+        <option *ngFor="let m of markets" [value]="m">{{ m }}</option>
+      </select>
+    </div>
+
+    <!-- Add input socialMediaLink -->
+    <div class="form-group">
+      <label for="socialMediaLink">Social Media Link:</label>
+      <input
+        type="text"
+        id="socialMediaLink"
+        name="socialMediaLink"
+        class="form-control"
+        [(ngModel)]="brand.socialMediaLink"
+        required
+      />
+    </div>
+
     <button type="submit" class="btn btn-primary" [disabled]="brandForm.invalid">
       Submit
     </button>

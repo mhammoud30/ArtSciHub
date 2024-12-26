@@ -9,6 +9,7 @@ import { Duration } from '../enums/duration.enum';
 import { Language } from '../enums/language.enum';
 import { ContentTone } from '../enums/content-tone.enum';
 import { CampaignObjective } from '../enums/campaign-objective.enum';
+import { CallToAction } from '../enums/call-to-action.enum';
 
 export interface CreateSocialMediaPost {
   link: string;
@@ -17,7 +18,7 @@ export interface CreateSocialMediaPost {
   format: Format;
   concept: Concept;
   creativeType: CreativeType;
-  sound: Sound;
+  sound: Sound[];
   targetAudience: TargetAudience;
   duration: Duration;
   views: number;
@@ -26,7 +27,9 @@ export interface CreateSocialMediaPost {
   shares: number;
   saves: number;
   language: Language;
-  callToAction: string;
+  callToAction: CallToAction;
+  promoCode: boolean;
+  hook: boolean;
   publishedAt: Date;
   contentTone: ContentTone;
   campaignObjective: CampaignObjective;

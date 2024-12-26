@@ -31,4 +31,10 @@ export class ListComponent {
       },
     );
   }
+
+  openPostLink(link: string): void {
+    if (link) {
+      window.open(link, '_blank');
+    }
+  }
 }

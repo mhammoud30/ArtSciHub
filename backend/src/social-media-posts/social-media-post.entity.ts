@@ -19,6 +19,7 @@ import { Duration } from './enums/duration.enum';
 import { Language } from './enums/language.enum';
 import { ContentTone } from './enums/content-tone.enum';
 import { CampaignObjective } from './enums/campaign-objective.enum';
+import { CallToAction } from './enums/call-to-action.enum';
 
 @Entity()
 export class SocialMediaPost {
@@ -60,9 +61,11 @@ export class SocialMediaPost {
 
   @Column('enum', {
     enum: Sound,
+    array: true,
     nullable: false,
+    default: [Sound.NO_SOUND],
   })
-  sound: string;
+  sound: string[];
 
   @Column('enum', {
     enum: TargetAudience,
@@ -97,8 +100,24 @@ export class SocialMediaPost {
   })
   language: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column('enum', {
+    enum: CallToAction,
+    nullable: false,
+    default: CallToAction.LEARN_MORE,
+  })
   callToAction: string;
+
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  promoCode: boolean;
+
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  hook: boolean;
 
   @Column({ type: 'timestamptz', nullable: false })
   publishedAt: Date;

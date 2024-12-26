@@ -25,6 +25,10 @@ export class PortalLayoutComponent {
   }
 
   toggleNav() {
+    // if we should collapse the nav i want to close the menus also if we should open it leave them closed
+    if (!this.isNavCollapsed) {
+      this.expandedMenu = null;
+    }
     this.isNavCollapsed = !this.isNavCollapsed;
   }
 

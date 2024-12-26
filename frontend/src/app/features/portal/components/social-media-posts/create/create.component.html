@@ -143,16 +143,29 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="sound">Sound:</label>
-            <select
-              [(ngModel)]="post.sound"
-              name="sound"
-              required
-              class="form-control"
-            >
-              <option *ngFor="let s of sounds" [value]="s">{{ s }}</option>
-            </select>
+          <div class="form-group custom-multi-select-container" #dropdownContainer>
+            <label>Sound:</label>
+            <div class="custom-select-trigger" (click)="toggleDropdown()">
+              <div class="selected-values">
+                <span *ngIf="post.sound.length === 0">Select sounds...</span>
+                <span *ngFor="let s of post.sound; let i = index">
+                  {{ s }}<span *ngIf="i < post.sound.length - 1">, </span>
+                </span>
+              </div>
+              <div class="arrow" [class.open]="dropdownOpen">&#9662;</div>
+            </div>
+
+            <div class="custom-dropdown-panel" *ngIf="dropdownOpen">
+              <div class="checkbox-option" *ngFor="let s of sounds">
+                <input
+                  type="checkbox"
+                  [checked]="post.sound.includes(s)"
+                  (change)="onCheckboxChange($event, s)"
+                  [id]="'sound_'+s"
+                />
+                <label [for]="'sound_'+s">{{ s }}</label>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -271,7 +284,10 @@
               required
               class="form-control"
             >
-              <option *ngFor="let audience of targetAudiences" [value]="audience">
+              <option
+                *ngFor="let audience of targetAudiences"
+                [value]="audience"
+              >
                 {{ audience }}
               </option>
             </select>
@@ -292,14 +308,37 @@
 
         <div class="form-group">
           <label for="callToAction">Call To Action:</label>
-          <input
+          <select
             [(ngModel)]="post.callToAction"
             name="callToAction"
-            type="text"
             required
             class="form-control"
-            placeholder="Enter call to action text"
+          >
+            <option *ngFor="let cta of callToActions" [value]="cta">
+              {{ cta }}
+            </option>
+          </select>
+        </div>
+
+        <!-- PromoCode checkbox -->
+        <div class="form-group checkbox-group">
+          <input
+            type="checkbox"
+            id="agree"
+            [(ngModel)]="post.promoCode"
+            name="promoCode"
           />
+          <label for="agree">Promo Code</label>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <input
+            type="checkbox"
+            id="agree"
+            [(ngModel)]="post.hook"
+            name="promoCode"
+          />
+          <label for="agree">Hook</label>
         </div>
 
         <div class="form-group">
@@ -307,7 +346,7 @@
           <input
             [(ngModel)]="post.publishedAt"
             name="publishedAt"
-            type="datetime-local"
+            type="date"
             required
             class="form-control"
             (focus)="onFocus($event)"

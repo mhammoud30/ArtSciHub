@@ -58,7 +58,7 @@ export class SocialMediaPostsService {
   /**
    * Delete social media post by id
    */
-  public async delete(id: number) {
+  /* public async delete(id: number) {
     const post = await this.findOneById(id);
     if (!post) {
       throw new NotFoundException('Post not found');
@@ -66,7 +66,7 @@ export class SocialMediaPostsService {
     await this.socialMediaPostRepository.delete(post);
 
     return { message: 'Post deleted', id };
-  }
+  } */
 
   /**
    * Update a social media post

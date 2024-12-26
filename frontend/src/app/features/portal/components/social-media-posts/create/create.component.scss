@@ -88,9 +88,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;
-    border-radius: 16px;
     z-index: 1000; /* Adjust if Snackbar is being hidden */
+    border-radius: 16px;
 
     .loader {
       width: 50px;
@@ -120,7 +119,7 @@
     margin-bottom: 1.5rem;
     border: 1px solid rgba($accent-color, 0.2);
     border-radius: 8px;
-    overflow: hidden;
+    // overflow: hidden;
     transition: all 0.3s ease;
 
     &.active {
@@ -139,6 +138,7 @@
         margin-top: 2%;
         max-height: 1000px;
         opacity: 1;
+        overflow: visible;
       }
     }
 
@@ -330,6 +330,156 @@
       .section-content {
         padding: 0 1rem;
       }
+    }
+  }
+}
+
+// Checkbox group styling
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  input[type="checkbox"] {
+    position: relative;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid $accent-color;
+    border-radius: 4px;
+    background: transparent;
+    margin: 0;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+
+    &:hover {
+      box-shadow: 0 0 5px rgba($accent-color, 0.4);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba($accent-color, 0.4);
+    }
+
+    &:checked {
+      background: $accent-color;
+      border-color: $accent-color;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 5px;
+        height: 10px;
+        border-right: 2px solid $secondary-color;
+        border-bottom: 2px solid $secondary-color;
+        transform: rotate(45deg);
+        top: 2px;
+        left: 7px;
+      }
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: #ff4d4d;
+    }
+  }
+
+  label {
+    color: $secondary-color;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.2;
+  }
+}
+// Custom Multi-Select Container (Dropdown)
+.custom-multi-select-container {
+  position: relative;
+  display: inline-block;
+  width: 100%; // Adjust as needed
+
+  .custom-select-trigger {
+    background: rgba($accent-color, 0.1);
+    border: 1px solid $peach-color;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $secondary-color;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba($accent-color, 0.2);
+      box-shadow: 0 0 10px rgba($accent-color, 0.2);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $accent-color;
+      box-shadow: 0 0 15px rgba($accent-color, 0.2);
+    }
+  }
+
+  .selected-values {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $secondary-color;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+
+  .arrow {
+    transition: transform 0.2s;
+    color: $accent-color;
+  }
+
+  .arrow.open {
+    transform: rotate(180deg);
+  }
+
+  .custom-dropdown-panel {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    width: 100%;
+    border: 1px solid $peach-color;
+    background: darken($primary-color, 5%);
+    z-index: 999;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 5px rgba($accent-color, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+  }
+
+  .checkbox-option {
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: $secondary-color;
+    transition: background 0.3s ease;
+
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      background: rgba($accent-color, 0.2);
     }
   }
 }

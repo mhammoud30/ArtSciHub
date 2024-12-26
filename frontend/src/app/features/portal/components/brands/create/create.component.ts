@@ -4,6 +4,7 @@ import { CreateBrandModel } from '../models/create-brand.model';
 import { Vertical } from '../enums/vertical.enum';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Market } from '../enums/market.enum';
 
 @Component({
   selector: 'app-create-brand',
@@ -17,8 +18,12 @@ export class CreateComponent {
   brand: CreateBrandModel = {
     name: '',
     vertical: Vertical.FASHION,
+    socialMediaLink: '',
+    market: Market.AE,
   };
   verticals: string[] = Object.values(Vertical);
+  markets: string[] = Object.values(Market);
+
   message: string = '';
 
   constructor(private brandService: BrandService) {}
