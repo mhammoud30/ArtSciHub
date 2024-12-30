@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SocialMediaPost } from '../social-media-post.entity';
 import { Repository } from 'typeorm';
@@ -51,8 +51,35 @@ export class SocialMediaPostsService {
   /**
    * Find social media post by id
    */
-  public async findOneById(id: number): Promise<SocialMediaPost> {
-    return this.socialMediaPostRepository.findOneBy({ id });
+  public async findOneById(id: number) {
+    try {
+      const post = await this.socialMediaPostRepository.findOne({
+        where: { id },
+        relations: ['brand', 'createdBy', 'updatedBy'],
+      });
+
+      if (!post) {
+        throw new Error('Post not found');
+      }
+
+      // Return the transformed post
+      return {
+        ...post,
+        brand: {
+          name: post.brand.name,
+          vertical: post.brand.vertical,
+        },
+        createdBy: {
+          name: `${post.createdBy.firstName} ${post.createdBy.lastName}`,
+        },
+        updatedBy: {
+          name: `${post.updatedBy?.firstName} ${post.updatedBy?.lastName}`,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      throw new Error('Post not found');
+    }
   }
 
   /**

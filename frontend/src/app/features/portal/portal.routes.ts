@@ -26,11 +26,23 @@ export const PORTAL_ROUTES: Routes = [
               .then(m => m.CreateComponent)
       },
       {
-        path: 'social-media-posts/view',
+        path: 'social-media-posts/list',
         loadComponent: () =>
           import('./components/social-media-posts/list/list.component')
             .then(m => m.ListComponent)
       },
+      {
+        path: 'social-media-posts/view/:id',
+        loadComponent: () =>
+          import('./components/social-media-posts/view/view.component')
+            .then(m => m.ViewComponent)
+      },
+      {
+        path: 'social-media-posts/analyze',
+        loadComponent: () =>
+          import('./components/social-media-posts/analyze/analyze.component')
+            .then(m => m.AnalyzeComponent)
+      }
 
     ]
   }

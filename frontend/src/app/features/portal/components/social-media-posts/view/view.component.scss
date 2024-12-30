@@ -1,0 +1,875 @@
+@use '../../../../../../styles.scss' as *;
+
+// Animations
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 15px rgba($accent-color, 0.5); }
+  50% { box-shadow: 0 0 30px rgba($accent-color, 0.8); }
+}
+
+@keyframes scanline {
+  0%, 100% { transform: translateY(-100%); }
+  50% { transform: translateY(100%); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.2; }
+}
+
+.post-view-container {
+  background: linear-gradient(135deg, rgba($primary-color, 0.95), rgba(darken($primary-color, 15%), 0.98));
+  padding: 3rem;
+  border-radius: 2rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba($accent-color, 0.3);
+  margin: 2rem auto;
+  max-width: 1400px;
+
+  // Tech grid overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      linear-gradient(90deg, rgba($tech-grid-color, 0.05) 1px, transparent 1px),
+      linear-gradient(0deg, rgba($tech-grid-color, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+  }
+
+  // Scanline effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(transparent, rgba($accent-color, 0.1), transparent);
+    animation: scanline 6s linear infinite;
+    pointer-events: none;
+  }
+
+// Updated title and button container
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // This spreads out the title and button
+  width: 100%;
+  margin-bottom: 2rem;
+
+  .title-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .accent-line {
+    width: 4px;
+    height: 32px;
+    background: $accent-color;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba($accent-color, 0.8),
+        transparent
+      );
+      animation: pulse 2s infinite;
+    }
+  }
+
+  h2 {
+    margin: 0;
+    color: $accent-color;
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    font-family: 'Share Tech Mono', monospace;
+    text-shadow: 0 0 10px rgba($accent-color, 0.3);
+  }
+}
+
+// Enhanced futuristic analyze button
+.analyze-btn {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba($accent-color, 0.1),
+    rgba($accent-color, 0.2)
+  );
+  border: 1px solid rgba($accent-color, 0.3);
+  color: $accent-color;
+  padding: 0.75rem 2rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 0 15px rgba($accent-color, 0.1),
+    0 0 30px rgba($accent-color, 0.05),
+    0 0 45px rgba($accent-color, 0.025);
+  isolation: isolate;
+
+  // Glowing border effect
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(
+      45deg,
+      transparent 20%,
+      rgba($accent-color, 0.5) 40%,
+      rgba($accent-color, 0.8) 50%,
+      rgba($accent-color, 0.5) 60%,
+      transparent 80%
+    );
+    border-radius: 0.25rem;
+    z-index: -2;
+    animation: borderGlow 3s linear infinite;
+  }
+
+  // Scanline effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba($accent-color, 0.05) 3px,
+      transparent 3px
+    );
+    opacity: 0.3;
+    z-index: -1;
+    animation: scanlines 10s linear infinite;
+  }
+
+  // Glitch text effect
+  span {
+    position: relative;
+    display: inline-block;
+
+    &::before,
+    &::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.8;
+    }
+
+    &::before {
+      animation: glitch-1 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      transform: translate(-2px, -2px);
+      color: rgba($accent-color, 0.8);
+    }
+
+    &::after {
+      animation: glitch-2 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+      transform: translate(2px, 2px);
+      color: rgba($accent-color, 0.8);
+    }
+  }
+
+  &:hover {
+    background: rgba($accent-color, 0.2);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 5px 20px rgba($accent-color, 0.3),
+      0 0 30px rgba($accent-color, 0.5) inset,
+      0 0 60px rgba($accent-color, 0.2);
+
+    &::before {
+      animation: borderGlow 1.5s linear infinite;
+    }
+  }
+
+  &:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow:
+      0 0 10px rgba($accent-color, 0.2),
+      0 0 20px rgba($accent-color, 0.3) inset;
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  33% { transform: translate(-2px, 1px); }
+  66% { transform: translate(2px, -1px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  33% { transform: translate(2px, -1px); }
+  66% { transform: translate(-2px, 1px); }
+}
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    70% {
+      transform: scale(2);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+  // Card styles
+  p-card {
+    background: rgba(darken($primary-color, 8%), 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba($accent-color, 0.4);
+    box-shadow: 0 0 35px rgba($glow-color, 0.15);
+    transition: all 0.4s ease;
+    margin: 1.5rem 0;
+
+    &:hover {
+      animation: glow 3s infinite;
+      transform: translateY(-3px);
+    }
+
+    ::ng-deep .p-card-content {
+      padding: 2rem;
+    }
+  }
+
+  // Header styles
+  h2 {
+    color: $accent-color;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+    position: relative;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 5px;
+      height: 80%;
+      background: linear-gradient($accent-color, adjust-hue($accent-color, 30deg));
+      transform: translateY(-50%);
+      border-radius: 3px;
+    }
+  }
+
+  // Panel styles
+  p-panel {
+    ::ng-deep .p-panel {
+      background: rgba($primary-color, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba($accent-color, 0.3);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba($glow-color, 0.2);
+        border-color: rgba($accent-color, 0.6);
+      }
+
+      .p-panel-header {
+        background: linear-gradient(90deg, rgba($accent-color, 0.15), transparent);
+        border-bottom: 2px solid rgba($accent-color, 0.3);
+        padding: 1.25rem;
+
+        .p-panel-title {
+          font-family: 'Share Tech Mono', monospace;
+          color: $accent-color;
+          font-size: 1.1rem;
+          letter-spacing: 0.05rem;
+
+          &::before {
+            content: '⟩';
+            margin-right: 0.5rem;
+            color: rgba($accent-color, 0.7);
+          }
+        }
+      }
+
+      .p-panel-content {
+        padding: 1.5rem;
+
+        .feature-toggle {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+
+          .boolean-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 3rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            background: rgba($primary-color, 0.3);
+            border: 1px solid rgba($accent-color, 0.2);
+            transition: all 0.3s ease;
+            padding: 0 0.75rem;
+
+            span {
+              font-size: 0.8rem;
+              font-weight: 600;
+
+              &.status-true {
+                color: #4CAF50;
+              }
+
+              &.status-false {
+                color: #F44336;
+              }
+            }
+
+            &.active {
+              background: rgba($accent-color, 0.15);
+              border-color: rgba($accent-color, 0.4);
+            }
+
+            &:hover {
+              transform: scale(1.05);
+              border-color: rgba($accent-color, 0.6);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Tab styles
+  p-tabView {
+    margin: 2rem 0;
+
+    ::ng-deep {
+      .p-tabview-nav {
+        border-color: rgba($accent-color, 0.3);
+        gap: 0.5rem;
+        padding: 0 1rem;
+
+        li {
+          margin-right: 0.5rem;
+
+          .p-tabview-nav-link {
+            background: rgba($primary-color, 0.9);
+            border-color: rgba($accent-color, 0.4);
+            color: $secondary-color;
+            padding: 1.25rem 2rem;
+            transition: all 0.3s ease;
+            border-radius: 0.75rem 0.75rem 0 0;
+
+            &:hover {
+              background: rgba($accent-color, 0.15);
+              border-color: $accent-color;
+            }
+
+            &.p-highlight {
+              background: linear-gradient(135deg, rgba($accent-color, 0.2), rgba($accent-color, 0.1));
+              border-bottom-color: $accent-color;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+
+      .p-tabview-panels {
+        padding: 2rem;
+        background: rgba($primary-color, 0.4);
+        backdrop-filter: blur(10px);
+        border-radius: 0 0 1rem 1rem;
+      }
+    }
+  }
+
+  // Grid layout
+  .grid {
+    gap: 2rem;
+    margin: 0;
+
+    .col-12, .col-6 {
+      padding: 1.5rem;
+      margin-bottom: 3%;
+    }
+  }
+
+  // Panel content styles
+  .panel-content {
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: rgba($primary-color, 0.4);
+      border-radius: 0.5rem;
+      border: 1px solid rgba($accent-color, 0.15);
+      transition: all 0.3s ease;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        background: rgba($primary-color, 0.6);
+        border-color: rgba($accent-color, 0.3);
+        transform: translateX(4px);
+      }
+
+      .font-bold {
+        color: rgba($secondary-color, 0.7);
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+      }
+
+      span:not(.font-bold) {
+        color: $secondary-color;
+        font-weight: 600;
+        position: relative;
+        padding-left: 1rem;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          width: 3px;
+          height: 3px;
+          background: $accent-color;
+          border-radius: 50%;
+          transform: translateY(-50%);
+        }
+      }
+
+      .chip-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  // Metrics Dashboard
+  .metrics-dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .metric-card {
+      background: rgba($primary-color, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba($accent-color, 0.2);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba($accent-color, 0.8),
+          transparent
+        );
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        border-color: rgba($accent-color, 0.4);
+        box-shadow:
+          0 8px 24px rgba($glow-color, 0.15),
+          0 2px 8px rgba($accent-color, 0.2);
+
+        .metric-icon {
+          transform: scale(1.1);
+        }
+
+        .progress-bar {
+          .progress-glow {
+            opacity: 1;
+          }
+        }
+      }
+
+      .metric-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.8rem;
+        background: rgba($accent-color, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+
+        i {
+          font-size: 1.2rem;
+          color: $accent-color;
+        }
+      }
+
+      .metric-content {
+        flex: 1;
+
+        .metric-title {
+          font-size: 0.85rem;
+          color: rgba($secondary-color, 0.7);
+          text-transform: uppercase;
+          letter-spacing: 0.05rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: $secondary-color;
+          margin-bottom: 1rem;
+        }
+
+        .metric-progress {
+          position: relative;
+          height: 6px;
+          background: rgba($primary-color, 0.3);
+          border-radius: 3px;
+          overflow: hidden;
+
+          .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(
+              90deg,
+              rgba($accent-color, 0.8),
+              rgba($accent-color, 0.4)
+            );
+            transition: width 0.3s ease;
+
+            .progress-glow {
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              width: 20px;
+              background: linear-gradient(
+                90deg,
+                transparent,
+                rgba($accent-color, 0.6)
+              );
+              filter: blur(3px);
+              opacity: 0;
+              transition: opacity 0.3s ease;
+            }
+          }
+
+          .target-marker {
+            position: absolute;
+            top: -4px;
+            width: 2px;
+            height: 14px;
+            background: rgba($secondary-color, 0.5);
+            transform: translateX(-50%);
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -4px;
+              left: 50%;
+              transform: translateX(-50%);
+              border: 4px solid transparent;
+              border-top-color: rgba($secondary-color, 0.5);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Chip styles
+  p-chip {
+    ::ng-deep .p-chip {
+      background: rgba($accent-color, 0.15);
+      border: 1px solid rgba($accent-color, 0.3);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba($accent-color, 0.25);
+        transform: translateY(-2px);
+      }
+
+      .p-chip-text {
+        color: $secondary-color;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Responsive styles
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+
+    .metrics-dashboard {
+      grid-template-columns: 1fr;
+    }
+
+    .info-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+
+      span:not(.font-bold) {
+        padding-left: 1rem;
+        margin-top: 0.25rem;
+      }
+    }
+  }
+}
+
+/* Enhanced Overlay styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70vw;
+  height: auto;
+  background: rgba($primary-color, 0.98);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.overlay-content {
+  text-align: center;
+  color: $secondary-color;
+  padding: 3rem;
+  border-radius: 1.5rem;
+  background: rgba($mint-color, 0.03);
+  border: 1px solid rgba($mint-color, 0.1);
+  position: relative;
+  width: 90vw;
+  max-width: 800px;
+  overflow: hidden;
+
+  p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    color: $mint-color;
+
+    &::after {
+      content: '_';
+      animation: blink 1s step-end infinite;
+    }
+  }
+}
+
+.analysis-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  border-radius: 50%;
+  padding: 2rem;
+  border: 1px solid rgba($mint-color, 0.1);
+}
+
+.progress-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    $mint-color var(--progress),
+    transparent var(--progress)
+  );
+  animation: progressRotate 2s linear forwards;
+  opacity: 0.3;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    background: $primary-color;
+  }
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: $mint-color;
+  opacity: 0.5;
+  animation: scan 1.5s linear infinite;
+}
+
+.result-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 4rem;
+  color: $mint-color;
+  opacity: 0;
+  animation: fadeInScore 0.3s ease-out forwards;
+  animation-delay: 2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::after {
+    content: 'SCORE';
+    font-size: 0.875rem;
+    letter-spacing: 0.5em;
+    opacity: 0.7;
+  }
+}
+
+.data-points {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  .point {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: $mint-color;
+    border-radius: 50%;
+    opacity: 0;
+
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}) {
+        top: random(100) * 1%;
+        left: random(100) * 1%;
+        animation: pointFade 0.2s ease-out forwards;
+        animation-delay: $i * 0.1s;
+      }
+    }
+  }
+}
+
+@keyframes scan {
+  from { transform: translateY(0); }
+  to { transform: translateY(400px); }
+}
+
+@keyframes progressRotate {
+  from { --progress: 0%; }
+  to { --progress: 100%; }
+}
+
+@keyframes fadeInScore {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes pointFade {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

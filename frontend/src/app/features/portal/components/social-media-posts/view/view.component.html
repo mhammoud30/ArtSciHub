@@ -1,0 +1,293 @@
+<div class="post-view-container">
+  <p-card>
+    <div class="flex items-center mb-4">
+      <div class="title-container">
+        <div class="title-section">
+          <div class="accent-line"></div>
+          <h2>SOCIAL MEDIA POST DETAILS</h2>
+        </div>
+        <button class="analyze-btn" (click)="startAnalysis()">
+          Get ArtSci Score
+        </button>
+      </div>
+    </div>
+
+    <!-- Enhanced Overlay -->
+    <div *ngIf="isAnalyzing" class="overlay">
+      <div class="overlay-content">
+        <p>ANALYZING CONTENT PARAMETERS</p>
+        <div class="analysis-container">
+          <div class="progress-circle"></div>
+          <div class="scan-line"></div>
+          <div class="data-points">
+            <div class="point" *ngFor="let i of [].constructor(40)"></div>
+          </div>
+          <div class="result-display" [style.opacity]="score !== null ? 1 : 0">
+            <span>{{ score }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Result Display -->
+    <div *ngIf="!isAnalyzing && score !== null" class="result-container">
+      <div class="score-display">
+        <div class="score-value">{{ score }}</div>
+        <div class="score-label">Content Score</div>
+      </div>
+    </div>
+
+    <p-tabView>
+      <!-- Basic Info -->
+      <p-tabPanel header="Basic Information">
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <p-panel header="Brand Details">
+              <div class="panel-content">
+                <div class="info-item">
+                  <span class="font-bold">Brand Name:</span>
+                  <span>{{ post.brand.name }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Vertical:</span>
+                  <span>{{ post.brand.vertical }}</span>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <p-panel header="Post Metadata">
+              <div class="panel-content">
+                <div class="info-item">
+                  <span class="font-bold">Created By:</span>
+                  <span>{{ post.createdBy.name }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Published:</span>
+                  <span>{{ post.publishedAt | date : "medium" }}</span>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+        </div>
+      </p-tabPanel>
+
+      <!-- Creative Details -->
+      <p-tabPanel header="Creative Details">
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <p-panel header="Format Information">
+              <div class="panel-content">
+                <div class="info-item">
+                  <span class="font-bold">Format:</span>
+                  <span>{{ post.format }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Creative Type:</span>
+                  <span>{{ post.creativeType }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Thumbnail:</span>
+                  <span>{{ post.thumbnail }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Duration:</span>
+                  <span>{{ post.duration }}</span>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <p-panel header="Content Details">
+              <div class="panel-content">
+                <div class="info-item">
+                  <span class="font-bold">Content Tone:</span>
+                  <span>{{ post.contentTone }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Language:</span>
+                  <span>{{ post.language }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Concept:</span>
+                  <span>{{ post.concept }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Sounds:</span>
+                  <div class="chip-container">
+                    <p-chip
+                      *ngFor="let sound of post.sound"
+                      [label]="sound"
+                      class="mr-2"
+                    ></p-chip>
+                  </div>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+        </div>
+      </p-tabPanel>
+
+      <!-- Campaign & Metrics -->
+      <p-tabPanel header="Campaign & Metrics">
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <p-panel header="Campaign Information">
+              <div class="panel-content">
+                <div class="info-item">
+                  <span class="font-bold">Campaign Objective:</span>
+                  <span>{{ post.campaignObjective }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Target Audience:</span>
+                  <span>{{ post.targetAudience }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Call To Action:</span>
+                  <span>{{ post.callToAction }}</span>
+                </div>
+                <div class="info-item">
+                  <div class="flex justify-between w-full">
+                    <div class="feature-toggle">
+                      <span class="font-bold">Promo Code:</span>
+                      <div
+                        class="boolean-indicator"
+                        [class.active]="post.promoCode"
+                      >
+                        <span
+                          [ngClass]="
+                            post.promoCode ? 'status-true' : 'status-false'
+                          "
+                        >
+                          {{ post.promoCode ? "YES" : "NO" }}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="feature-toggle">
+                      <span class="font-bold">Hook:</span>
+                      <div class="boolean-indicator" [class.active]="post.hook">
+                        <span
+                          [ngClass]="post.hook ? 'status-true' : 'status-false'"
+                        >
+                          {{ post.hook ? "YES" : "NO" }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <p-panel header="Performance Analytics" styleClass="metrics-panel">
+              <div class="metrics-dashboard">
+                <!-- Views -->
+                <div class="metric-card">
+                  <div class="metric-icon">
+                    <i class="pi pi-eye"></i>
+                  </div>
+                  <div class="metric-content">
+                    <h3 class="metric-title">Views</h3>
+                    <div class="metric-value">{{ post.views | number }}</div>
+                    <div class="metric-progress">
+                      <div
+                        class="progress-bar"
+                        [style.width.%]="(post.views / maxViews) * 100"
+                      >
+                        <div class="progress-glow"></div>
+                      </div>
+                      <div class="target-marker" [style.left.%]="75"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Likes -->
+                <div class="metric-card">
+                  <div class="metric-icon">
+                    <i class="pi pi-heart"></i>
+                  </div>
+                  <div class="metric-content">
+                    <h3 class="metric-title">Likes</h3>
+                    <div class="metric-value">{{ post.likes | number }}</div>
+                    <div class="metric-progress">
+                      <div
+                        class="progress-bar"
+                        [style.width.%]="(post.likes / maxLikes) * 100"
+                      >
+                        <div class="progress-glow"></div>
+                      </div>
+                      <div class="target-marker" [style.left.%]="75"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Comments -->
+                <div class="metric-card">
+                  <div class="metric-icon">
+                    <i class="pi pi-comments"></i>
+                  </div>
+                  <div class="metric-content">
+                    <h3 class="metric-title">Comments</h3>
+                    <div class="metric-value">{{ post.comments | number }}</div>
+                    <div class="metric-progress">
+                      <div
+                        class="progress-bar"
+                        [style.width.%]="(post.comments / maxComments) * 100"
+                      >
+                        <div class="progress-glow"></div>
+                      </div>
+                      <div class="target-marker" [style.left.%]="75"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Shares -->
+                <div class="metric-card">
+                  <div class="metric-icon">
+                    <i class="pi pi-share-alt"></i>
+                  </div>
+                  <div class="metric-content">
+                    <h3 class="metric-title">Shares</h3>
+                    <div class="metric-value">{{ post.shares | number }}</div>
+                    <div class="metric-progress">
+                      <div
+                        class="progress-bar"
+                        [style.width.%]="(post.shares / maxShares) * 100"
+                      >
+                        <div class="progress-glow"></div>
+                      </div>
+                      <div class="target-marker" [style.left.%]="75"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Saves -->
+                <div class="metric-card">
+                  <div class="metric-icon">
+                    <i class="pi pi-share-alt"></i>
+                  </div>
+                  <div class="metric-content">
+                    <h3 class="metric-title">Saves</h3>
+                    <div class="metric-value">{{ post.saves | number }}</div>
+                    <div class="metric-progress">
+                      <div
+                        class="progress-bar"
+                        [style.width.%]="(post.shares / maxShares) * 100"
+                      >
+                        <div class="progress-glow"></div>
+                      </div>
+                      <div class="target-marker" [style.left.%]="75"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </p-card>
+</div>

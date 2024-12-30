@@ -6,6 +6,8 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +16,12 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor])
     ),
     provideAnimations(),
+    provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura
+            }
+        }),
     importProvidersFrom(MatSnackBarModule), provideAnimationsAsync(), // Import Snackbar module
   ]
 };

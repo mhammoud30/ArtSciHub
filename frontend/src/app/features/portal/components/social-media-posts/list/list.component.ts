@@ -32,9 +32,11 @@ export class ListComponent {
     );
   }
 
-  openPostLink(link: string): void {
-    if (link) {
-      window.open(link, '_blank');
-    }
+  // Currently selected post
+  selectedPost?: GetSocialMediaPostModel;
+
+  selectPost(id: number): void {
+    window.open(`/portal/social-media-posts/view/${id}`, '_blank');
   }
+
 }

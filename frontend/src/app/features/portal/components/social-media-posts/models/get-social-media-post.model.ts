@@ -40,4 +40,7 @@ export interface GetSocialMediaPostModel {
   createdBy: {
     name: string;
   }
+  updatedBy: {
+    name: string;
+  }
 }

@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let post of posts" (click)="openPostLink(post.link)">
+        <tr *ngFor="let post of posts" (click)="selectPost(post.id)">
           <td>{{ post.brand.name }}</td>
           <td>{{ post.brand.vertical }}</td>
           <td>{{ post.platform }}</td>

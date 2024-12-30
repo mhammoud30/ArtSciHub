@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { SocialMediaPostsService } from './providers/social-media-posts.service';
 import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 import { CreateSocialMediaPostDto } from './dtos/create-social-media-post.dto';
@@ -24,5 +31,10 @@ export class SocialMediaPostsController {
   @Get()
   public async findAll() {
     return this.socialMediaPostsService.findAll();
+  }
+
+  @Get(':id')
+  public async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.socialMediaPostsService.findOneById(id);
   }
 }
