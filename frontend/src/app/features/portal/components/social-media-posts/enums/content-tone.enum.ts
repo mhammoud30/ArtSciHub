@@ -5,4 +5,7 @@ export enum ContentTone {
   INSPIRATIONAL = 'Inspirational',
   FORMAL = 'Formal',
   INFORMATIONAL = 'Informational',
+  PERSUASIVE = 'Persuasive',
+  CONVERSATIONAL = 'Conversational',
+  DESCRIPTIVE = 'Descriptive',
 }
