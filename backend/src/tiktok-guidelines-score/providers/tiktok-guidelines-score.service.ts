@@ -65,6 +65,12 @@ export class TiktokGuidelinesScoreService {
       supersPresent: 12.5,
     };
 
+    // add all scores to get max score
+    const maxScore = Object.values(CRITERIA_WEIGHTS).reduce(
+      (acc, curr) => acc + curr,
+      0,
+    );
+
     // Calculate the contentScore
     let contentScore = 0;
 
@@ -76,6 +82,9 @@ export class TiktokGuidelinesScoreService {
     if (simpleMessage) contentScore += CRITERIA_WEIGHTS.simpleMessage;
     if (soundOn) contentScore += CRITERIA_WEIGHTS.soundOn;
     if (supersPresent) contentScore += CRITERIA_WEIGHTS.supersPresent;
+
+    // map content score to 100
+    contentScore = (contentScore / maxScore) * 100;
 
     // Create a new TiktokGuidelinesScore entity
     const newScore = this.tiktokGuidelinesScoreRepository.create({

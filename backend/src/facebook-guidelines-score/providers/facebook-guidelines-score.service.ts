@@ -66,6 +66,12 @@ export class FacebookGuidelinesScoreService {
       soundOn: 14.29,
     };
 
+    // add all scores to get max score
+    const maxScore = Object.values(CRITERIA_WEIGHTS).reduce(
+      (acc, curr) => acc + curr,
+      0,
+    );
+
     // Calculate the content score based on which criteria are met
     let contentScore = 0;
     if (aspectRatio) contentScore += CRITERIA_WEIGHTS.aspectRatio;
@@ -76,6 +82,9 @@ export class FacebookGuidelinesScoreService {
       contentScore += CRITERIA_WEIGHTS.optimisedForSoundOff;
     if (simpleMessage) contentScore += CRITERIA_WEIGHTS.simpleMessage;
     if (soundOn) contentScore += CRITERIA_WEIGHTS.soundOn;
+
+    // map content score to 100
+    contentScore = (contentScore / maxScore) * 100;
 
     // Create a new FacebookGuidelinesScore entity
     const newScore = this.facebookGuidelinesScoreRepository.create({

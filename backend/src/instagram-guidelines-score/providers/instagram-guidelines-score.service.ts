@@ -70,6 +70,12 @@ export class InstagramGuidelinesScoreService {
     const ASPECT_RATIO_WEIGHT = 7.14;
     const OPTIMAL_LENGTH_WEIGHT = 7.14;
 
+    // add all scores to get max score
+    const maxScore =
+      Object.values(SHARED_CRITERIA_WEIGHTS).reduce((a, b) => a + b, 0) +
+      ASPECT_RATIO_WEIGHT +
+      OPTIMAL_LENGTH_WEIGHT;
+
     // Calculate the contentScore
     let contentScore = 0;
 
@@ -84,6 +90,9 @@ export class InstagramGuidelinesScoreService {
     // Type-based criteria (already set in the booleans)
     if (aspectRatio) contentScore += ASPECT_RATIO_WEIGHT;
     if (optimalLength) contentScore += OPTIMAL_LENGTH_WEIGHT;
+
+    // map content score to 100
+    contentScore = (contentScore / maxScore) * 100;
 
     // Create a new InstagramGuidelinesScore entity
     const newScore = this.instagramGuidelinesScoreRepository.create({

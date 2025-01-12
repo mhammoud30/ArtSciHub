@@ -67,6 +67,12 @@ export class YoutubeGuidelinesScoreService {
       soundOn: 16.67,
     };
 
+    // add all scores to get max score
+    const maxScore = Object.values(CRITERIA_WEIGHTS).reduce(
+      (acc, curr) => acc + curr,
+      0,
+    );
+
     // Calculate the contentScore
     let contentScore = 0;
     if (aspectRatio) contentScore += CRITERIA_WEIGHTS.aspectRatio;
@@ -76,6 +82,9 @@ export class YoutubeGuidelinesScoreService {
     if (pacing) contentScore += CRITERIA_WEIGHTS.pacing;
     if (reinforce) contentScore += CRITERIA_WEIGHTS.reinforce;
     if (soundOn) contentScore += CRITERIA_WEIGHTS.soundOn;
+
+    // map content score to 100
+    contentScore = (contentScore / maxScore) * 100;
 
     // Create a new guidelines score entity
     const newScore = this.youtubeGuidelinesScoreRepository.create({
