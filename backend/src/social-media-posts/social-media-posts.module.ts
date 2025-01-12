@@ -6,6 +6,7 @@ import { UsersModule } from 'src/users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SocialMediaPost } from './social-media-post.entity';
 import { CreateSocialMediaPostProvider } from './providers/create-social-media-post.provider';
+import { PaginationModule } from 'src/common/pagination/pagination.module';
 
 @Module({
   controllers: [SocialMediaPostsController],
@@ -14,6 +15,7 @@ import { CreateSocialMediaPostProvider } from './providers/create-social-media-p
     TypeOrmModule.forFeature([SocialMediaPost]),
     BrandsModule,
     UsersModule,
+    PaginationModule,
   ],
 })
 export class SocialMediaPostsModule {}

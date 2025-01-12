@@ -10,18 +10,66 @@
           Get ArtSci Score
         </button>
       </div>
-    </div>
 
-    <!-- Enhanced Overlay -->
+      <div class="platform-container ml-4">
+        <a [href]="post.link" target="_blank" rel="noopener noreferrer">
+          {{ post.platform }}
+        </a>
+      </div>
+    </div>
+    <!-- Analyzing Overlay -->
     <div *ngIf="isAnalyzing" class="overlay">
       <div class="overlay-content">
         <p>ANALYZING CONTENT PARAMETERS</p>
+
         <div class="analysis-container">
+          <!-- 3D Rotating Orb -->
           <div class="progress-circle"></div>
+
+          <!-- Pulsing ring around the orb -->
+          <div class="pulse-ring"></div>
+
+          <!-- Additional swirling layers for extra complexity -->
+          <div class="swirl-bg swirl-bg-1"></div>
+          <div class="swirl-bg swirl-bg-2"></div>
+          <div class="swirl-bg swirl-bg-3"></div>
+
+          <!-- Moving scan line across the orb -->
           <div class="scan-line"></div>
+
+          <!-- Data points / sparkles (with multi-orbit motion) -->
           <div class="data-points">
             <div class="point" *ngFor="let i of [].constructor(40)"></div>
           </div>
+
+          <!-- Dynamic “tech-speak” lines -->
+          <div class="tech-lines">
+            <div
+              class="tech-line"
+              *ngFor="let line of techLines; let idx = index"
+              [style.animationDelay]="idx * 1.5 + 's'"
+            >
+              {{ line }}
+            </div>
+          </div>
+
+          <!-- Staged Sentences (optional) -->
+          <div class="staged-sentences">
+            <p *ngIf="analysisStage >= 1" [@sentenceAppear]="'in'">
+              Collecting data from multiple sources...
+            </p>
+            <p *ngIf="analysisStage >= 2" [@sentenceAppear]="'in'">
+              Performing NLP-based sentiment analysis...
+            </p>
+            <p *ngIf="analysisStage >= 3" [@sentenceAppear]="'in'">
+              Cross-referencing computed metrics...
+            </p>
+            <p *ngIf="analysisStage >= 4" [@sentenceAppear]="'in'">
+              Finalizing advanced score...
+            </p>
+          </div>
+
+          <!-- Calculated Score display -->
           <div class="result-display" [style.opacity]="score !== null ? 1 : 0">
             <span>{{ score }}</span>
           </div>
@@ -29,7 +77,7 @@
       </div>
     </div>
 
-    <!-- Enhanced Result Display -->
+    <!-- Enhanced Result Display when not analyzing -->
     <div *ngIf="!isAnalyzing && score !== null" class="result-container">
       <div class="score-display">
         <div class="score-value">{{ score }}</div>
@@ -80,8 +128,8 @@
             <p-panel header="Format Information">
               <div class="panel-content">
                 <div class="info-item">
-                  <span class="font-bold">Format:</span>
-                  <span>{{ post.format }}</span>
+                  <span class="font-bold">Dimensions:</span>
+                  <span>{{ post.dimensions }}</span>
                 </div>
                 <div class="info-item">
                   <span class="font-bold">Creative Type:</span>
@@ -112,7 +160,13 @@
                 </div>
                 <div class="info-item">
                   <span class="font-bold">Concept:</span>
-                  <span>{{ post.concept }}</span>
+                  <div class="chip-container">
+                    <p-chip
+                      *ngFor="let concept of post.concept"
+                      [label]="concept"
+                      class="mr-2"
+                    ></p-chip>
+                  </div>
                 </div>
                 <div class="info-item">
                   <span class="font-bold">Sounds:</span>
@@ -130,6 +184,30 @@
         </div>
       </p-tabPanel>
 
+      <!-- Audience & Targeting -->
+      <p-tabPanel header="Target Audience">
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <p-panel header="Audience Information">
+              <div class="panel-content">
+                <div class="info-item">
+                  <span class="font-bold">Age:</span>
+                  <span>{{ post.targetAudienceAge }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold"> Gender </span>
+                  <span>{{ post.targetAudienceGender }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="font-bold">Income:</span>
+                  <span>{{ post.targetAudienceIncome }}</span>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+        </div>
+      </p-tabPanel>
+
       <!-- Campaign & Metrics -->
       <p-tabPanel header="Campaign & Metrics">
         <div class="grid">
@@ -139,10 +217,6 @@
                 <div class="info-item">
                   <span class="font-bold">Campaign Objective:</span>
                   <span>{{ post.campaignObjective }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="font-bold">Target Audience:</span>
-                  <span>{{ post.targetAudience }}</span>
                 </div>
                 <div class="info-item">
                   <span class="font-bold">Call To Action:</span>

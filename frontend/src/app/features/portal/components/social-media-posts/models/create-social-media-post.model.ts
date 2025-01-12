@@ -1,25 +1,29 @@
 import { Platform } from '../enums/platform.enum';
 import { Thumbnail } from '../enums/thumbnail.enum';
-import { Format } from '../enums/format.enum';
+import { Dimensions } from '../enums/dimensions.enum';
 import { Concept } from '../enums/concept.enum';
 import { CreativeType } from '../enums/creative-type.enum';
 import { Sound } from '../enums/sound.enum';
-import { TargetAudience } from '../enums/target-audience.enum';
+import { TargetAudienceAge } from '../enums/target-audience-age.enum';
 import { Duration } from '../enums/duration.enum';
 import { Language } from '../enums/language.enum';
 import { ContentTone } from '../enums/content-tone.enum';
 import { CampaignObjective } from '../enums/campaign-objective.enum';
 import { CallToAction } from '../enums/call-to-action.enum';
+import { TargetAudienceGender } from '../enums/target-audience-gender.enum';
+import { TargetAudienceIncome } from '../enums/target-audience-income.enum';
 
 export interface CreateSocialMediaPost {
   link: string;
   platform: Platform;
   thumbnail: Thumbnail;
-  format: Format;
-  concept: Concept;
+  dimensions: Dimensions;
+  concept: Concept[];
   creativeType: CreativeType;
   sound: Sound[];
-  targetAudience: TargetAudience;
+  targetAudienceAge: TargetAudienceAge;
+  targetAudienceGender: TargetAudienceGender;
+  targetAudienceIncome: TargetAudienceIncome;
   duration: Duration;
   views: number;
   comments: number;

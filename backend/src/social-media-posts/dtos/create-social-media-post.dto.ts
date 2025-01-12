@@ -10,16 +10,18 @@ import {
 import { Type } from 'class-transformer';
 import { Platform } from '../enums/platform.enum';
 import { Thumbnail } from '../enums/thumbnail.enum';
-import { Format } from '../enums/format.enum';
+import { Dimensions } from '../enums/dimensions.enum';
 import { Concept } from '../enums/concept.enum';
 import { CreativeType } from '../enums/creative-type.enum';
 import { Sound } from '../enums/sound.enum';
-import { TargetAudience } from '../enums/target-audience.enum';
+import { TargetAudienceAge } from '../enums/target-audience-age.enum';
 import { Duration } from '../enums/duration.enum';
 import { Language } from '../enums/language.enum';
 import { ContentTone } from '../enums/content-tone.enum';
 import { CampaignObjective } from '../enums/campaign-objective.enum';
 import { CallToAction } from '../enums/call-to-action.enum';
+import { TargetAudienceGender } from '../enums/target-audience-gender.enum';
+import { TargetAudienceIncome } from '../enums/target-audience-income.enum';
 
 export class CreateSocialMediaPostDto {
   @IsString()
@@ -34,13 +36,16 @@ export class CreateSocialMediaPostDto {
   @IsNotEmpty()
   thumbnail: Thumbnail;
 
-  @IsEnum(Format, { message: 'Format must be a valid enum value' })
+  @IsEnum(Dimensions, { message: 'Format must be a valid enum value' })
   @IsNotEmpty()
-  format: Format;
+  dimensions: Dimensions;
 
-  @IsEnum(Concept, { message: 'Concept must be a valid enum value' })
+  @IsEnum(Concept, {
+    message: 'Concept must be a valid enum value',
+    each: true,
+  })
   @IsNotEmpty()
-  concept: Concept;
+  concept: Concept[];
 
   @IsEnum(CreativeType, { message: 'Creative type must be a valid enum value' })
   @IsNotEmpty()
@@ -50,11 +55,23 @@ export class CreateSocialMediaPostDto {
   @IsNotEmpty()
   sound: Sound[];
 
-  @IsEnum(TargetAudience, {
+  @IsEnum(TargetAudienceAge, {
     message: 'Target audience must be a valid enum value',
   })
   @IsNotEmpty()
-  targetAudience: TargetAudience;
+  targetAudienceAge: TargetAudienceAge;
+
+  @IsEnum(TargetAudienceGender, {
+    message: 'Target audience Gender must be a valid enum value',
+  })
+  @IsNotEmpty()
+  targetAudienceGender: TargetAudienceGender;
+
+  @IsEnum(TargetAudienceIncome, {
+    message: 'Target audience Income must be a valid enum value',
+  })
+  @IsNotEmpty()
+  targetAudienceIncome: TargetAudienceIncome;
 
   @IsEnum(Duration, { message: 'Duration must be a valid enum value' })
   @IsNotEmpty()

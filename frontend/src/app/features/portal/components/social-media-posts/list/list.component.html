@@ -1,18 +1,37 @@
 <div class="post-list-container">
   <h2 class="post-list-title">Social Media Posts</h2>
-  <div class="post-list-table-container">
-    <table class="post-list-table">
-      <thead>
+
+  <!-- Show error message (if any) -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Wrap the p-table inside a container to apply scrolling and table styles -->
+  <div class="post-list-table-container" *ngIf="posts?.data && posts.data.length > 0">
+    <p-table
+      class="post-list-table"
+      [value]="posts.data"
+      [paginator]="true"
+      [rows]="itemsPerPage"
+      [totalRecords]="totalItems"
+      [lazy]="true"
+      (onPage)="onPageChange($event)"
+      responsiveLayout="scroll"
+    >
+      <!-- Table header columns -->
+      <ng-template pTemplate="header">
         <tr>
           <th>Brand Name</th>
           <th>Vertical</th>
           <th>Platform</th>
           <th>Thumbnail</th>
-          <th>Format</th>
+          <th>Dimensions</th>
           <th>Concept</th>
           <th>Creative Type</th>
           <th>Sound</th>
-          <th>Audience</th>
+          <th>Audience Age</th>
+          <th>Audience Gender</th>
+          <th>Audience Income</th>
           <th>Duration</th>
           <th>Views</th>
           <th>Comments</th>
@@ -26,18 +45,25 @@
           <th>Campaign Objective</th>
           <th>Created By</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let post of posts" (click)="selectPost(post.id)">
+      </ng-template>
+
+      <!-- Table body rows -->
+      <ng-template pTemplate="body" let-post>
+        <tr (click)="selectPost(post.id)" class="clickable-row">
           <td>{{ post.brand.name }}</td>
           <td>{{ post.brand.vertical }}</td>
           <td>{{ post.platform }}</td>
-          <td>{{ post.thumbnail}}</td>
-          <td>{{ post.format }}</td>
+          <td>
+            <!-- If you actually have an image URL, replace post.thumbnail with <img [src]="post.thumbnail" alt="Thumbnail" /> -->
+            {{ post.thumbnail }}
+          </td>
+          <td>{{ post.dimensions }}</td>
           <td>{{ post.concept }}</td>
           <td>{{ post.creativeType }}</td>
           <td>{{ post.sound }}</td>
-          <td>{{ post.targetAudience }}</td>
+          <td>{{ post.targetAudienceAge }}</td>
+          <td>{{ post.targetAudienceGender }}</td>
+          <td>{{ post.targetAudienceIncome }}</td>
           <td>{{ post.duration }}</td>
           <td>{{ post.views }}</td>
           <td>{{ post.comments }}</td>
@@ -51,7 +77,7 @@
           <td>{{ post.campaignObjective }}</td>
           <td>{{ post.createdBy.name }}</td>
         </tr>
-      </tbody>
-    </table>
+      </ng-template>
+    </p-table>
   </div>
 </div>

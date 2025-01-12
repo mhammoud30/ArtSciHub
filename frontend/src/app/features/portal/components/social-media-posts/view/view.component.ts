@@ -31,6 +31,18 @@ export class ViewComponent {
   isAnalyzing = false;
   score: number | null = null;
 
+  analysisStage: number = 0;
+
+  // Example "tech lines"
+  techLines = [
+    '[SYSTEM INIT] Checking system integrity...',
+    '[I/O] Loading language models...',
+    '[PROCESS] Neural net iteration #1...',
+    '[PROCESS] Neural net iteration #2...',
+    '[SECURITY] Data encryption in progress...',
+    // Add more lines as you wish
+  ];
+
   maxViews = 100000; // Set these to appropriate maximum values
   maxLikes = 5000; // based on your data
   maxComments = 1000;
@@ -66,21 +78,38 @@ export class ViewComponent {
   }
 
   startAnalysis() {
+    // Reset states each time:
     this.isAnalyzing = true;
     this.score = null;
+    this.analysisStage = 0; // ensures we start from stage 0
 
-    // First phase: Show analysis animation
-    setTimeout(() => {
-      // Calculate score (replace with actual calculation later)
-      const calculatedScore = Math.floor(Math.random() * 101);
+    // We can show each stage with a small delay (e.g., 2 seconds per stage).
+    let currentStage = 0;
+    const totalStages = 4;
+    const stageDelay = 3000;
 
-      // Set score but keep overlay visible
-      this.score = calculatedScore;
+    // Function to show next stage
+    const showNextStage = () => {
+      currentStage++;
+      this.analysisStage = currentStage;
 
-      // Second phase: Show score and fade out overlay
-      setTimeout(() => {
-        this.isAnalyzing = false;
-      }, 1500); // Give time for score display animation
-    }, 2500); // Time for initial analysis animation
+      if (currentStage < totalStages) {
+        // Schedule next stage
+        setTimeout(showNextStage, stageDelay);
+      } else {
+        // All stages shown; calculate the score
+        const calculatedScore = Math.floor(Math.random() * 101);
+        this.score = calculatedScore;
+
+        // Wait a bit so the user can see the final stage & score inside the overlay
+        setTimeout(() => {
+          this.isAnalyzing = false;
+        }, 3500);
+      }
+    };
+
+    // Start the chain of stages
+    showNextStage();
   }
+
 }

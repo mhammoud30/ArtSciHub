@@ -106,12 +106,12 @@
           <div class="form-group">
             <label for="format">Format:</label>
             <select
-              [(ngModel)]="post.format"
+              [(ngModel)]="post.dimensions"
               name="format"
               required
               class="form-control"
             >
-              <option *ngFor="let f of formats" [value]="f">{{ f }}</option>
+              <option *ngFor="let f of dimensions" [value]="f">{{ f }}</option>
             </select>
           </div>
 
@@ -139,11 +139,17 @@
               required
               class="form-control"
             >
-              <option *ngFor="let t of thumbnails" [value]="t">{{ t }}</option>
+              <option *ngFor="let t of thumbnails" [value]="t">
+                {{ t }}
+              </option>
             </select>
           </div>
 
-          <div class="form-group custom-multi-select-container" #dropdownContainer>
+          <!-- Sound multi-select -->
+          <div
+            class="form-group custom-multi-select-container"
+            #dropdownContainer
+          >
             <label>Sound:</label>
             <div class="custom-select-trigger" (click)="toggleDropdown()">
               <div class="selected-values">
@@ -161,9 +167,9 @@
                   type="checkbox"
                   [checked]="post.sound.includes(s)"
                   (change)="onCheckboxChange($event, s)"
-                  [id]="'sound_'+s"
+                  [id]="'sound_' + s"
                 />
-                <label [for]="'sound_'+s">{{ s }}</label>
+                <label [for]="'sound_' + s">{{ s }}</label>
               </div>
             </div>
           </div>
@@ -179,6 +185,32 @@
           >
             <option *ngFor="let d of durations" [value]="d">{{ d }}</option>
           </select>
+        </div>
+
+        <!-- Concept multi-select -->
+        <div class="form-group custom-multi-select-container" #conceptDropdownContainer>
+          <label>Concept:</label>
+          <div class="custom-select-trigger" (click)="toggleConceptDropdown()">
+            <div class="selected-values">
+              <span *ngIf="post.concept.length === 0">Select concepts...</span>
+              <span *ngFor="let c of post.concept; let i = index">
+                {{ c }}<span *ngIf="i < post.concept.length - 1">, </span>
+              </span>
+            </div>
+            <div class="arrow" [class.open]="conceptDropdownOpen">&#9662;</div>
+          </div>
+
+          <div class="custom-dropdown-panel" *ngIf="conceptDropdownOpen">
+            <div class="checkbox-option" *ngFor="let c of concepts">
+              <input
+                type="checkbox"
+                [checked]="post.concept.includes(c)"
+                (change)="onConceptCheckboxChange($event, c)"
+                [id]="'concept_' + c"
+              />
+              <label [for]="'concept_' + c">{{ c }}</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -253,10 +285,70 @@
       </div>
     </div>
 
+    <!-- Target Audience Section -->
+    <div class="form-section" [class.active]="formSections.targetAudience">
+      <div class="section-header" (click)="toggleSection('targetAudience')">
+        <div class="section-title">05 // Target Audience</div>
+        <div class="toggle-icon">↓</div>
+      </div>
+
+      <div class="section-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="targetAudienceAge">Audience Age:</label>
+            <select
+              [(ngModel)]="post.targetAudienceAge"
+              name="targetAudienceAge"
+              required
+              class="form-control"
+            >
+              <option *ngFor="let age of targetAudienceAges" [value]="age">
+                {{ age }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="targetAudienceGender">Audience Gender:</label>
+            <select
+              [(ngModel)]="post.targetAudienceGender"
+              name="targetAudienceGender"
+              required
+              class="form-control"
+            >
+              <option
+                *ngFor="let gender of targetAudienceGenders"
+                [value]="gender"
+              >
+                {{ gender }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="targetAudienceIncome">Audience Income:</label>
+            <select
+              [(ngModel)]="post.targetAudienceIncome"
+              name="targetAudienceIncome"
+              required
+              class="form-control"
+            >
+              <option
+                *ngFor="let income of targetAudienceIncomes"
+                [value]="income"
+              >
+                {{ income }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Campaign Details Section -->
     <div class="form-section" [class.active]="formSections.campaign">
       <div class="section-header" (click)="toggleSection('campaign')">
-        <div class="section-title">05 // Campaign Details</div>
+        <div class="section-title">06 // Campaign Details</div>
         <div class="toggle-icon">↓</div>
       </div>
 
@@ -275,35 +367,6 @@
               </option>
             </select>
           </div>
-
-          <div class="form-group">
-            <label for="targetAudience">Target Audience:</label>
-            <select
-              [(ngModel)]="post.targetAudience"
-              name="targetAudience"
-              required
-              class="form-control"
-            >
-              <option
-                *ngFor="let audience of targetAudiences"
-                [value]="audience"
-              >
-                {{ audience }}
-              </option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="concept">Concept:</label>
-          <select
-            [(ngModel)]="post.concept"
-            name="concept"
-            required
-            class="form-control"
-          >
-            <option *ngFor="let c of concepts" [value]="c">{{ c }}</option>
-          </select>
         </div>
 
         <div class="form-group">
@@ -334,11 +397,11 @@
         <div class="form-group checkbox-group">
           <input
             type="checkbox"
-            id="agree"
+            id="hook"
             [(ngModel)]="post.hook"
-            name="promoCode"
+            name="hook"
           />
-          <label for="agree">Hook</label>
+          <label for="hook">Hook</label>
         </div>
 
         <div class="form-group">

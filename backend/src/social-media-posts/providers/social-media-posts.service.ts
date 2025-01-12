@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { CreateSocialMediaPostDto } from '../dtos/create-social-media-post.dto';
 import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 import { CreateSocialMediaPostProvider } from './create-social-media-post.provider';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { GetSocialMediaPostDto } from './get-social-media-posts.dto';
 
 @Injectable()
 export class SocialMediaPostsService {
@@ -18,6 +20,10 @@ export class SocialMediaPostsService {
      * Inject create post provider
      */
     private readonly createSocialMediaPostProvider: CreateSocialMediaPostProvider,
+    /**
+     * Injecting Pagination Provider
+     */
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   public async create(
@@ -32,11 +38,19 @@ export class SocialMediaPostsService {
   /**
    * Find all social media posts
    */
-  public async findAll() {
-    const posts = await this.socialMediaPostRepository.find({
-      relations: ['brand', 'createdBy'],
-    });
-    return posts.map((post) => ({
+  public async findAll(socialMediaPostQuery: GetSocialMediaPostDto) {
+    const paginatedResult = await this.paginationProvider.paginateQuery(
+      {
+        limit: socialMediaPostQuery.limit,
+        page: socialMediaPostQuery.page,
+      },
+      this.socialMediaPostRepository,
+      ['brand', 'createdBy'],
+    );
+
+    const { data, meta, links } = paginatedResult;
+
+    const transformedData = data.map((post) => ({
       ...post,
       brand: {
         name: post.brand.name,
@@ -46,6 +60,12 @@ export class SocialMediaPostsService {
         name: `${post.createdBy.firstName} ${post.createdBy.lastName}`,
       },
     }));
+
+    return {
+      data: transformedData,
+      meta,
+      links,
+    };
   }
 
   /**

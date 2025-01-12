@@ -3,6 +3,7 @@ import { environment } from '../../../core/environments/environment';
 import { CreateSocialMediaPost } from '../components/social-media-posts/models/create-social-media-post.model';
 import { HttpClient } from '@angular/common/http';
 import { GetSocialMediaPostModel } from '../components/social-media-posts/models/get-social-media-post.model';
+import { GetPaginatedPostsModel } from '../components/social-media-posts/models/get-paginated-post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class SocialMediaPostService {
     return this.http.post(`${this.socialMediaPostApiUrl}`, socialMediaPost);
   }
 
-  public getSocialMediaPosts() {
-    return this.http.get(`${this.socialMediaPostApiUrl}`);
+  public getSocialMediaPosts(limit?: number , page?: number) {
+    return this.http.get<GetPaginatedPostsModel>(`${this.socialMediaPostApiUrl}?limit=${limit}&page=${page}`);
   }
 
   public getSocialMediaPostById(id: number) {

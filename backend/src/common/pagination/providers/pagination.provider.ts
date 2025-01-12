@@ -16,6 +16,7 @@ export class PaginationProvider {
   public async paginateQuery<T extends ObjectLiteral>(
     paginationQuery: PaginationQueryDto,
     repository: Repository<T>,
+    relations: string[] = [],
   ): Promise<Paginated<T>> {
     /**
      *  Fetch the data from the database
@@ -23,6 +24,7 @@ export class PaginationProvider {
     const results = await repository.find({
       skip: (paginationQuery.page - 1) * paginationQuery.limit,
       take: paginationQuery.limit,
+      relations: relations,
     });
 
     /**

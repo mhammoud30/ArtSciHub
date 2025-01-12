@@ -34,7 +34,6 @@
     font-weight: bold;
     font-size: 1.8rem;
     margin-bottom: 2rem;
-    font-weight: bold;
     letter-spacing: 1px;
     text-align: center;
 
@@ -49,6 +48,16 @@
     }
   }
 
+  .error-message {
+    color: red;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  /*
+   * TABLE WRAPPER
+   */
   .post-list-table-container {
     overflow-x: auto;
     margin: 1rem -1rem;
@@ -68,11 +77,9 @@
 
     // Custom scrollbar
     &::-webkit-scrollbar {
-      margin-top: 20px; /* Add margin above scrollbar */
+      margin-top: 20px; // Add margin above scrollbar
       height: 8px;
     }
-
-    padding-bottom: 20px;
 
     &::-webkit-scrollbar-track {
       background: rgba($accent-color, 0.1);
@@ -87,110 +94,94 @@
         background: linear-gradient(45deg, $accent-color, #78E6D0);
       }
     }
-  }
 
-  .post-list-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    color: $secondary-color;
-    font-size: 0.9rem;
+    /*
+     * TABLE STYLES
+     */
+    .post-list-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      color: $secondary-color;
+      font-size: 0.9rem;
 
-    th,
-    td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid rgba($peach-color, 0.2);
-      white-space: nowrap;
-
-      // Add min-width to prevent extreme column shrinking
-      min-width: 100px;
-
-      &:first-child {
-        left: 0;
-        background: darken($primary-color, 5%);
-        z-index: 10;
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid rgba($peach-color, 0.2);
+        white-space: nowrap;
+        min-width: 100px; // prevent extreme shrink
       }
-    }
 
-    th {
-      background: rgba($peach-color, 0.1);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-size: 0.8rem;
-      top: 0;
-      z-index: 20;
-
-      &:first-child {
-        z-index: 30; // Higher z-index for corner cell
+      th {
+        background: rgba($peach-color, 0.1);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.8rem;
+        top: 0;
+        z-index: 20;
       }
-    }
 
-    tbody {
-      tr {
-        transition: background-color 0.3s ease;
+      tbody {
+        tr {
+          transition: background-color 0.3s ease;
 
-        &:hover {
-          background: rgba($peach-color, 0.05);
-
-          td:first-child {
-            background: rgba($peach-color, 0.2);
-          }
-        }
-
-        // Alternating row colors
-        &:nth-child(even) {
-          background: rgba($peach-color, 0.1);
-
-          td:first-child {
+          &:hover {
             background: rgba($peach-color, 0.05);
           }
-        }
-      }
 
-      td {
-        // Specific column styling
-        &:nth-child(10), // Views
-        &:nth-child(11), // Comments
-        &:nth-child(12), // Likes
-        &:nth-child(13), // Shares
-        &:nth-child(14),
-        &:nth-child(15) {
-          // Saves
-          text-align: right;
-          font-family: "Courier New", monospace;
-        }
-
-        // Thumbnail column
-        &:nth-child(3) {
-          img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 4px;
-            border: 1px solid rgba($peach-color, 0.3);
+          // alternating row colors
+          &:nth-child(even) {
+            background: rgba($peach-color, 0.1);
           }
         }
 
-        // DateTime column
-        &:nth-child(17) {
-          font-family: "Courier New", monospace;
-          font-size: 0.85rem;
+        td {
+          // Thumbnail column (4th column)
+          &:nth-child(4) {
+            img {
+              width: 60px;
+              height: 60px;
+              object-fit: cover;
+              border-radius: 4px;
+              border: 1px solid rgba($peach-color, 0.3);
+            }
+          }
+
+          // Numeric columns for Views (13), Comments (14), Likes (15), Shares (16), Saves (17)
+          &:nth-child(13),
+          &:nth-child(14),
+          &:nth-child(15),
+          &:nth-child(16),
+          &:nth-child(17) {
+            text-align: right;
+            font-family: "Courier New", monospace;
+          }
+
+          // Published At column (20)
+          &:nth-child(20) {
+            font-family: "Courier New", monospace;
+            font-size: 0.85rem;
+          }
         }
       }
     }
   }
-}
 
-// Responsive adjustments
-@media (max-width: 768px) {
-  .post-list-container {
+  // Responsive adjustments
+  @media (max-width: 768px) {
     padding: 1rem;
     border-radius: 8px;
 
     .post-list-title {
       font-size: 1.4rem;
+    }
+
+    .post-list-table-container {
+      padding: 0; // reduce padding for smaller screens
+      margin: 0;  // reduce margin for smaller screens
     }
 
     .post-list-table {
@@ -200,6 +191,75 @@
       td {
         padding: 0.75rem;
       }
+    }
+  }
+}
+
+/* Additional pagination or clickable-row styling, if needed */
+.pagination-controls {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination-button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background: rgba($accent-color, 0.1);
+  border: 1px solid rgba($accent-color, 0.3);
+  color: $accent-color;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba($accent-color, 0.2);
+  }
+
+  &.active {
+    background-color: $accent-color;
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+/* Page-size selector styling */
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;  // Optional spacing from other elements
+
+  label {
+    font-weight: 500;
+    color: $accent-color;
+    text-transform: uppercase; // or remove if not desired
+    font-size: 0.9rem;         // adjust as needed
+  }
+
+  select {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid rgba($accent-color, 0.3);
+    border-radius: 4px;
+    background-color: rgba($accent-color, 0.1);
+    color: $accent-color;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $accent-color;
+    }
+
+    &:hover {
+      background-color: rgba($accent-color, 0.2);
     }
   }
 }

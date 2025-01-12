@@ -5,11 +5,13 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { SocialMediaPostsService } from './providers/social-media-posts.service';
 import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 import { CreateSocialMediaPostDto } from './dtos/create-social-media-post.dto';
 import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
+import { GetSocialMediaPostDto } from './providers/get-social-media-posts.dto';
 
 @Controller('api/social-media-posts')
 export class SocialMediaPostsController {
@@ -29,8 +31,8 @@ export class SocialMediaPostsController {
   }
 
   @Get()
-  public async findAll() {
-    return this.socialMediaPostsService.findAll();
+  public async findAll(@Query() postQuery: GetSocialMediaPostDto) {
+    return this.socialMediaPostsService.findAll(postQuery);
   }
 
   @Get(':id')

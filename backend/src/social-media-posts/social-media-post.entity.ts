@@ -10,16 +10,18 @@ import { User } from 'src/users/user.entity';
 import { Brand } from 'src/brands/brand.entity';
 import { Thumbnail } from './enums/thumbnail.enum';
 import { Platform } from './enums/platform.enum';
-import { Format } from './enums/format.enum';
+import { Dimensions } from './enums/dimensions.enum';
 import { Concept } from './enums/concept.enum';
 import { CreativeType } from './enums/creative-type.enum';
 import { Sound } from './enums/sound.enum';
-import { TargetAudience } from './enums/target-audience.enum';
+import { TargetAudienceAge } from './enums/target-audience-age.enum';
 import { Duration } from './enums/duration.enum';
 import { Language } from './enums/language.enum';
 import { ContentTone } from './enums/content-tone.enum';
 import { CampaignObjective } from './enums/campaign-objective.enum';
 import { CallToAction } from './enums/call-to-action.enum';
+import { TargetAudienceGender } from './enums/target-audience-gender.enum';
+import { TargetAudienceIncome } from './enums/target-audience-income.enum';
 
 @Entity()
 export class SocialMediaPost {
@@ -42,16 +44,19 @@ export class SocialMediaPost {
   thumbnail: string;
 
   @Column('enum', {
-    enum: Format,
+    enum: Dimensions,
     nullable: false,
+    default: Dimensions.HORIZONTAL_1920_1080,
   })
-  format: string;
+  dimensions: string;
 
   @Column('enum', {
     enum: Concept,
+    array: true,
     nullable: false,
+    default: [Concept.CELEBRITY_CONTENT],
   })
-  concept: string;
+  concept: string[];
 
   @Column('enum', {
     enum: CreativeType,
@@ -68,10 +73,25 @@ export class SocialMediaPost {
   sound: string[];
 
   @Column('enum', {
-    enum: TargetAudience,
+    enum: TargetAudienceAge,
     nullable: false,
+    default: TargetAudienceAge.EIGHTEEN_TO_THIRTY_FOUR,
   })
-  targetAudience: string;
+  targetAudienceAge: string;
+
+  @Column('enum', {
+    enum: TargetAudienceGender,
+    nullable: false,
+    default: TargetAudienceGender.ALL_GENDERS,
+  })
+  targetAudienceGender: string;
+
+  @Column('enum', {
+    enum: TargetAudienceIncome,
+    nullable: false,
+    default: TargetAudienceIncome.LOWER_CLASS,
+  })
+  targetAudienceIncome: string;
 
   @Column('enum', {
     enum: Duration,
