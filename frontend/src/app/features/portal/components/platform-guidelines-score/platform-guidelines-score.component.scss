@@ -1,0 +1,300 @@
+// Import your color variables
+$primary-color: #1d1d3b;
+$secondary-color: #ffffff;
+$accent-color: #A675F5;
+$tech-grid-color: rgba(77, 77, 255, 0.1);
+$glow-color: rgba(77, 77, 255, 0.2);
+$error-color: #ff4d4d;
+$peach-color: #F5B393;
+$mint-color: #78E6D0;
+$purple-color: #A675F5;
+$dark-bg: #0a0a1a;
+$text-color: #ffffff;
+$card-bg: rgba(255, 255, 255, 0.1);
+
+body {
+  background-color: $dark-bg;
+  color: $text-color;
+  background-image:
+    linear-gradient(to right, $tech-grid-color 1px, transparent 1px),
+    linear-gradient(to bottom, $tech-grid-color 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.p-tabview {
+  background: rgba(29, 29, 59, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba($accent-color, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba($accent-color, 0.2);
+  position: relative;
+  margin: 20px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(45deg, $accent-color, transparent, $accent-color);
+    border-radius: 13px;
+    z-index: -1;
+    opacity: 0.3;
+  }
+
+  .p-tabview-nav {
+    background: rgba($tech-grid-color, 0.3);
+    border-bottom: 2px solid $accent-color;
+    padding: 0.5rem 0.5rem 0;
+
+    li {
+      .p-tabview-nav-link {
+        color: $text-color;
+        padding: 1rem 1.5rem;
+        transition: all 0.3s ease;
+        border-radius: 8px 8px 0 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+
+        &:hover {
+          background: rgba($accent-color, 0.2);
+          color: $accent-color;
+        }
+      }
+
+      &.p-highlight .p-tabview-nav-link {
+        background: $accent-color;
+        color: $text-color;
+        box-shadow: 0 0 15px rgba($accent-color, 0.3);
+      }
+    }
+  }
+
+  .p-tabview-panels {
+    padding: 2rem;
+    background: rgba($card-bg, 0.1);
+    border-radius: 0 0 12px 12px;
+  }
+}
+
+.p-fluid {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  // Type selector styling
+  .p-field {
+    background: rgba($card-bg, 0.2);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba($accent-color, 0.2);
+    margin-bottom: 1%;
+
+    label {
+      display: block;
+      color: $text-color;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba($dark-bg, 0.5);
+      border: 1px solid rgba($accent-color, 0.3);
+      border-radius: 4px;
+      color: $text-color;
+      font-size: 0.9rem;
+
+      &:focus {
+        border-color: $accent-color;
+        box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+      }
+
+      option {
+        background-color: $dark-bg;
+        color: $text-color;
+      }
+    }
+  }
+
+  // Checkbox container styling
+  .p-field-checkbox {
+    background: rgba($card-bg, 0.2);
+    border: 1px solid rgba($accent-color, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    position: relative;
+    margin-bottom: 1%;
+
+    &:hover {
+      background: rgba($accent-color, 0.1);
+      transform: translateY(-2px);
+    }
+
+    // Checkbox styling
+    .p-checkbox {
+      margin-top: 0.25rem;
+
+      .p-checkbox-box {
+        background: rgba($card-bg, 0.3);
+        border: 2px solid $accent-color;
+        width: 22px;
+        height: 22px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+
+        &.p-highlight {
+          background: $accent-color;
+          border-color: $accent-color;
+          box-shadow: 0 0 10px rgba($accent-color, 0.3);
+
+          .p-checkbox-icon {
+            color: $text-color;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    // Label styling
+    label {
+      color: $text-color;
+      font-size: 0.9rem;
+      line-height: 1.5;
+
+      strong {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        color: $accent-color;
+
+        &::after {
+          content: '';
+          display: block;
+          width: 30px;
+          height: 2px;
+          background: $accent-color;
+          margin-top: 0.25rem;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  // Save button styling
+  button.p-button {
+    background: $accent-color;
+    border: none;
+    padding: 1rem 2rem;
+    color: $text-color;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    align-self: flex-end;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba($accent-color, 0.4);
+      background: lighten($accent-color, 5%);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+
+// Platform-specific styles
+.instagram-form {
+  .p-checkbox-box.p-highlight {
+    background: $purple-color !important;
+    border-color: $purple-color !important;
+  }
+  strong { color: $purple-color !important; }
+}
+
+.facebook-form {
+  .p-checkbox-box.p-highlight {
+    background: $mint-color !important;
+    border-color: $mint-color !important;
+  }
+  strong { color: $mint-color !important; }
+}
+
+.tiktok-form {
+  .p-checkbox-box.p-highlight {
+    background: $peach-color !important;
+    border-color: $peach-color !important;
+  }
+  strong { color: $peach-color !important; }
+}
+
+.youtube-form {
+  .p-checkbox-box.p-highlight {
+    background: $error-color !important;
+    border-color: $error-color !important;
+  }
+  strong { color: $error-color !important; }
+}
+
+// Responsive adjustments
+@media screen and (max-width: 768px) {
+  .p-tabview {
+    margin: 10px;
+
+    .p-tabview-panels {
+      padding: 1rem;
+    }
+  }
+
+  .p-fluid {
+    .p-field-checkbox {
+      padding: 0.75rem;
+      grid-template-columns: auto 1fr;
+      gap: 0.75rem;
+
+      label {
+        font-size: 0.85rem;
+
+        strong {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba($card-bg, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $accent-color;
+  border-radius: 4px;
+
+  &:hover {
+    background: lighten($accent-color, 10%);
+  }
+}

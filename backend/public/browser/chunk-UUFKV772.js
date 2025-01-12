@@ -1,0 +1,1 @@
+import"./chunk-4CLCTAJ7.js";var t=[{path:"",loadComponent:()=>import("./chunk-G4JDQXLQ.js").then(o=>o.AdminLayoutComponent),children:[{path:"users",loadComponent:()=>import("./chunk-5S7TB73O.js").then(o=>o.UsersComponent)},{path:"dashboard",loadComponent:()=>import("./chunk-CWXMUN4X.js").then(o=>o.DashboardComponent)}]}];export{t as ADMIN_ROUTES};

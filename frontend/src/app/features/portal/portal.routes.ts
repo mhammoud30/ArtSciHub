@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+
 export const PORTAL_ROUTES: Routes = [
   {
     path: '',
@@ -42,6 +43,12 @@ export const PORTAL_ROUTES: Routes = [
         loadComponent: () =>
           import('./components/social-media-posts/analyze/analyze.component')
             .then(m => m.AnalyzeComponent)
+      },
+      {
+        path: 'plaform-guidelines-scores',
+        loadComponent: () =>
+          import('./components/platform-guidelines-score/platform-guidelines-score.component')
+            .then(m => m.PlatformGuidelinesScoreComponent)
       }
 
     ]

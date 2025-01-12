@@ -9,6 +9,10 @@ import {
 import { role } from './enums/role.enum';
 import { Brand } from 'src/brands/brand.entity';
 import { SocialMediaPost } from 'src/social-media-posts/social-media-post.entity';
+import { TiktokGuidelinesScore } from 'src/tiktok-guidelines-score/tiktok-guidelines-score.entity';
+import { YoutubeGuidelinesScore } from 'src/youtube-guidelines-score/youtube-guidelines-score.entity';
+import { FacebookGuidelinesScore } from 'src/facebook-guidelines-score/facebook-guidelines-score.entity';
+import { InstagramGuidelinesScore } from 'src/instagram-guidelines-score/instagram-guidelines-score.entity';
 
 @Entity()
 export class User {
@@ -92,6 +96,30 @@ export class User {
 
   @OneToMany(() => SocialMediaPost, (post) => post.updatedBy)
   updatedSocialMediaPosts: SocialMediaPost[];
+
+  @OneToMany(
+    () => TiktokGuidelinesScore,
+    (tiktokGuidelinesScore) => tiktokGuidelinesScore.createdBy,
+  )
+  createdTiktokGuidelinesScore: TiktokGuidelinesScore[];
+
+  @OneToMany(
+    () => YoutubeGuidelinesScore,
+    (youtubeGuidelinesScore) => youtubeGuidelinesScore.createdBy,
+  )
+  createdYoutubeGuidelinesScore: YoutubeGuidelinesScore[];
+
+  @OneToMany(
+    () => FacebookGuidelinesScore,
+    (facebookGuidelinesScore) => facebookGuidelinesScore.createdBy,
+  )
+  createdFacebookGuidelinesScore: FacebookGuidelinesScore[];
+
+  @OneToMany(
+    () => InstagramGuidelinesScore,
+    (instagramGuidelinesScore) => instagramGuidelinesScore.createdBy,
+  )
+  createdInstagramGuidelinesScore: InstagramGuidelinesScore[];
 
   /**
    * use later

@@ -15,6 +15,10 @@ import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard'
 import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
 import { BrandsModule } from './brands/brands.module';
 import { SocialMediaPostsModule } from './social-media-posts/social-media-posts.module';
+import { YoutubeGuidelinesScoreModule } from './youtube-guidelines-score/youtube-guidelines-score.module';
+import { FacebookGuidelinesScoreModule } from './facebook-guidelines-score/facebook-guidelines-score.module';
+import { InstagramGuidelinesScoreModule } from './instagram-guidelines-score/instagram-guidelines-score.module';
+import { TiktokGuidelinesScoreModule } from './tiktok-guidelines-score/tiktok-guidelines-score.module';
 
 // Get the current NODE_ENV environment variable
 const ENV = process.env.NODE_ENV;
@@ -50,6 +54,10 @@ const ENV = process.env.NODE_ENV;
     PaginationModule,
     BrandsModule,
     SocialMediaPostsModule,
+    YoutubeGuidelinesScoreModule,
+    FacebookGuidelinesScoreModule,
+    InstagramGuidelinesScoreModule,
+    TiktokGuidelinesScoreModule,
   ],
   controllers: [AppController],
   providers: [

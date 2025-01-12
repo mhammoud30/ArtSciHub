@@ -1,0 +1,500 @@
+<p-tabView>
+  <!-- Instagram Tab -->
+  <p-tabPanel header="Instagram">
+    <form [formGroup]="instagramForm" class="p-fluid">
+      <!-- TYPE (STORY/REEL) -->
+      <div class="p-field">
+        <label for="ig-type">Type</label>
+        <select formControlName="type" id="ig-type" class="p-inputtext p-component">
+          <option value="STORY">STORY</option>
+          <option value="REEL">REEL</option>
+        </select>
+      </div>
+
+      <!-- brandLogoEarly -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="ig-brandLogoEarly"
+          formControlName="brandLogoEarly"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="ig-brandLogoEarly">
+          <strong>Brand Logo Early</strong>
+          Creative meets this criteria if it includes brand logo within the first 3 seconds (2.99s).
+          A logo may be overlaid, in-situation, or appear on the product/packaging.
+        </label>
+      </div>
+
+      <!-- humanized -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="ig-humanized"
+          formControlName="humanized"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="ig-humanized">
+          <strong>Humanized</strong>
+          Videos meet this criteria if people are shown at any time. Any human body parts are acceptable
+          (including animation/cartoon format).
+        </label>
+      </div>
+
+      <!-- optimisedForSoundOff -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="ig-optimisedForSoundOff"
+          formControlName="optimisedForSoundOff"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="ig-optimisedForSoundOff">
+          <strong>Optimised for Sound Off</strong>
+          Video meets this criteria if it has been optimized for sound-off consumption
+          (subtitles or supers). If a talking head is present, subtitles/supers must be
+          included in the same frame. Videos with no audio also pass this guideline.
+        </label>
+      </div>
+
+      <!-- simpleMessage -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="ig-simpleMessage"
+          formControlName="simpleMessage"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="ig-simpleMessage">
+          <strong>Simple Message</strong>
+          Creative meets this criteria if no more than 10 words appear in supers on each frame
+          (excluding logos, subtitles, text on packaging, T&Cs, etc.). Any other words,
+          including CTAs or pricing, are counted.
+        </label>
+      </div>
+
+      <!-- soundOn -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="ig-soundOn"
+          formControlName="soundOn"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="ig-soundOn">
+          <strong>Sound On </strong>
+          Video meets this guideline if it includes any audible sound.
+        </label>
+      </div>
+
+      <!-- aspectRatio -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="ig-aspectRatio"
+          formControlName="aspectRatio"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="ig-aspectRatio">
+          <strong>Aspect Ratio </strong>
+          For Instagram Stories: 9:16 required.
+          For Instagram Reels: 9:16 or 1:1 required.
+        </label>
+      </div>
+
+      <!-- optimalLength -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="ig-optimalLength"
+          formControlName="optimalLength"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="ig-optimalLength">
+          <strong>Optimal Length </strong>
+          For Instagram Reels: ≤ 15.1 seconds.
+          For Instagram Stories: < 13.1 seconds.
+        </label>
+      </div>
+
+      <!-- Submit button for Instagram only -->
+      <button
+        pButton
+        type="button"
+        label="Save Instagram"
+        class="p-mt-3"
+        (click)="onSaveInstagram()"
+      >
+      </button>
+    </form>
+  </p-tabPanel>
+
+  <!-- Facebook Tab -->
+  <p-tabPanel header="Facebook">
+    <form [formGroup]="facebookForm" class="p-fluid">
+      <!-- aspectRatio -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="fb-aspectRatio"
+          formControlName="aspectRatio"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="fb-aspectRatio">
+          <strong>Aspect Ratio </strong>
+          Creative meets this criteria if the asset's aspect ratio is 9:16 or 1:1.
+        </label>
+      </div>
+
+      <!-- brandLogoEarly -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="fb-brandLogoEarly"
+          formControlName="brandLogoEarly"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="fb-brandLogoEarly">
+          <strong>Brand Logo Early </strong>
+          Creative meets this criteria if it includes a brand logo within the first 3 seconds (2.99s).
+          A logo may be overlaid, in-situation, or appear on product/packaging.
+        </label>
+      </div>
+
+      <!-- humanized -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="fb-humanized"
+          formControlName="humanized"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="fb-humanized">
+          <strong>Humanized </strong>
+          Videos meet this criteria if people are shown at any time. Any human body parts
+          (including animation/cartoon) are acceptable.
+        </label>
+      </div>
+
+      <!-- optimalLength -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="fb-optimalLength"
+          formControlName="optimalLength"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="fb-optimalLength">
+          <strong>Optimal Length </strong>
+          This criteria is met if the creative is ≤ 15.1 seconds in length.
+        </label>
+      </div>
+
+      <!-- optimisedForSoundOff -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="fb-optimisedForSoundOff"
+          formControlName="optimisedForSoundOff"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="fb-optimisedForSoundOff">
+          <strong>Optimised for Sound Off </strong>
+          Video meets this criteria if it has been optimized for sound-off consumption
+          (subtitles/supers). If a talking head is shown, subtitles/supers must be in the same frame.
+          Videos with no audio also pass.
+        </label>
+      </div>
+
+      <!-- simpleMessage -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="fb-simpleMessage"
+          formControlName="simpleMessage"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="fb-simpleMessage">
+          <strong>Simple Message </strong>
+          Creative meets this criteria if no more than 10 words appear in supers on each frame
+          (excluding logos, subtitles, text on packaging, etc.). Any additional words,
+          including CTAs/pricing, are counted.
+        </label>
+      </div>
+
+      <!-- soundOn -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="fb-soundOn"
+          formControlName="soundOn"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="fb-soundOn">
+          <strong>Sound On </strong>
+          Video meets this guideline if it includes any audible sound.
+        </label>
+      </div>
+
+      <!-- Submit button for Facebook only -->
+      <button
+        pButton
+        type="button"
+        label="Save Facebook"
+        class="p-mt-3"
+        (click)="onSaveFacebook()"
+      >
+      </button>
+    </form>
+  </p-tabPanel>
+
+  <!-- Tiktok Tab -->
+  <p-tabPanel header="Tiktok">
+    <form [formGroup]="tiktokForm" class="p-fluid">
+      <!-- aspectRatio -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-aspectRatio"
+          formControlName="aspectRatio"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-aspectRatio">
+          <strong>Aspect Ratio </strong>
+          Videos meet this criteria if the aspect ratio is 9:16.
+        </label>
+      </div>
+
+      <!-- brandGoodbye -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-brandGoodbye"
+          formControlName="brandGoodbye"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-brandGoodbye">
+          <strong>Brand Goodbye </strong>
+          Creative meets this if brand name/logo or branded product/packaging
+          is shown in the LAST 5 seconds. (Bayer logo does NOT pass.)
+        </label>
+      </div>
+
+      <!-- brandLink -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-brandLink"
+          formControlName="brandLink"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-brandLink">
+          <strong>Brand Link </strong>
+          Creative meets this if branding (brand logo or branded product)
+          is shown within the first 3 seconds (2.99s). (Bayer logo does NOT pass.)
+        </label>
+      </div>
+
+      <!-- breakThe4thWall -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-breakThe4thWall"
+          formControlName="breakThe4thWall"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-breakThe4thWall">
+          <strong>Break the 4th Wall </strong>
+          Videos meet this criteria if the viewer is addressed directly,
+          e.g., direct eye contact or a question prompting a response.
+        </label>
+      </div>
+
+      <!-- humanized -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-humanized"
+          formControlName="humanized"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-humanized">
+          <strong>Humanized </strong>
+          Videos meet this if at least one human with a visible face
+          is present at any time (animation/cartoon faces do NOT pass).
+        </label>
+      </div>
+
+      <!-- simpleMessage -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-simpleMessage"
+          formControlName="simpleMessage"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-simpleMessage">
+          <strong>Simple Message </strong>
+          No more than 10 words per frame in supers (excluding logos, subtitles,
+          text on packaging, T&Cs). Any other words, including CTAs/pricing, count.
+        </label>
+      </div>
+
+      <!-- soundOn -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-soundOn"
+          formControlName="soundOn"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-soundOn">
+          <strong>Sound On </strong>
+          Videos meet this guideline if they include any audible sound.
+        </label>
+      </div>
+
+      <!-- supersPresent -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="tt-supersPresent"
+          formControlName="supersPresent"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="tt-supersPresent">
+          <strong>Supers Present </strong>
+          Videos meet this criterion if supers are featured within the first 3 seconds (2.99s).
+          This excludes in-situ text, text on packaging, and T&Cs.
+        </label>
+      </div>
+
+      <!-- Submit button for Tiktok only -->
+      <button
+        pButton
+        type="button"
+        label="Save Tiktok"
+        class="p-mt-3"
+        (click)="onSaveTiktok()"
+      >
+      </button>
+    </form>
+  </p-tabPanel>
+
+  <!-- YouTube Tab -->
+  <p-tabPanel header="YouTube">
+    <form [formGroup]="youtubeForm" class="p-fluid">
+      <!-- aspectRatio -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="yt-aspectRatio"
+          formControlName="aspectRatio"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="yt-aspectRatio">
+          <strong>Aspect Ratio </strong>
+          Videos meet this criteria if the creative’s aspect ratio is 16:9, 9:16, or 4:5.
+        </label>
+      </div>
+
+      <!-- brandAudioMention -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="yt-brandAudioMention"
+          formControlName="brandAudioMention"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="yt-brandAudioMention">
+          <strong>Brand Audio Mention </strong>
+          Creative meets this guideline if the brand name is mentioned audibly
+          (master brand or sub-brand name).
+        </label>
+      </div>
+
+      <!-- frame -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="yt-frame"
+          formControlName="frame"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="yt-frame">
+          <strong>Frame </strong>
+          Videos meet this if a single person (visible face) or product(s) occupy
+          ≥30% of the frame at any time. Multiple products can be combined to reach 30%.
+        </label>
+      </div>
+
+      <!-- introduce -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="yt-introduce"
+          formControlName="introduce"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="yt-introduce">
+          <strong>Introduce </strong>
+          Branding (product or logo on packaging) appears within the first 5 seconds (4.99s).
+        </label>
+      </div>
+
+      <!-- pacing -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="yt-pacing"
+          formControlName="pacing"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="yt-pacing">
+          <strong>Pacing </strong>
+          At least one shot change (hard cut, transition, or camera movement)
+          occurs in the first 5 seconds (4.99s).
+        </label>
+      </div>
+
+      <!-- reinforce -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="yt-reinforce"
+          formControlName="reinforce"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="yt-reinforce">
+          <strong>Reinforce </strong>
+          The logo is present in the creative (exclusive of packaging) within the
+          first 5 seconds (4.99s) and clearly visible. (Bayer logo does NOT pass.)
+        </label>
+      </div>
+
+      <!-- soundOn -->
+      <div class="p-field-checkbox">
+        <p-checkbox
+          inputId="yt-soundOn"
+          formControlName="soundOn"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="yt-soundOn">
+          <strong>Sound On </strong>
+          Video meets this guideline if it includes any audible sound.
+        </label>
+      </div>
+
+      <!-- Submit button for YouTube only -->
+      <button
+        pButton
+        type="button"
+        label="Save YouTube"
+        class="p-mt-3"
+        (click)="onSaveYoutube()"
+      >
+      </button>
+    </form>
+  </p-tabPanel>
+</p-tabView>
