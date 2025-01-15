@@ -27,4 +27,8 @@ export class SocialMediaPostService {
   public getSocialMediaPostById(id: number) {
     return this.http.get(`${this.socialMediaPostApiUrl}/${id}`);
   }
+
+  public getDashboardData(filter: any) {
+    return this.http.post(`${this.socialMediaPostApiUrl}/dashboard`, filter);
+  }
 }

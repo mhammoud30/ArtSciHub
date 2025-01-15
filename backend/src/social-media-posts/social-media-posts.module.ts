@@ -7,10 +7,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SocialMediaPost } from './social-media-post.entity';
 import { CreateSocialMediaPostProvider } from './providers/create-social-media-post.provider';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
+import { GetDashboardDataProvider } from './providers/get-dashboard-data.provider';
 
 @Module({
   controllers: [SocialMediaPostsController],
-  providers: [SocialMediaPostsService, CreateSocialMediaPostProvider],
+  providers: [
+    SocialMediaPostsService,
+    CreateSocialMediaPostProvider,
+    GetDashboardDataProvider,
+  ],
   imports: [
     TypeOrmModule.forFeature([SocialMediaPost]),
     BrandsModule,

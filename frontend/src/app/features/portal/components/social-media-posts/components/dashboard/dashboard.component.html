@@ -1,1 +1,140 @@
-<p>dashboard works!</p>
+<div class="grid p-3">
+  <!-- FILTER SECTION -->
+  <div class="col-12 md:col-3">
+    <p-datePicker
+      [(ngModel)]="filter.startDate"
+      dateFormat="yy-mm-dd"
+      placeholder="Start Date">
+    </p-datePicker>
+  </div>
+  <div class="col-12 md:col-3">
+    <p-datePicker
+      [(ngModel)]="filter.endDate"
+      dateFormat="yy-mm-dd"
+      placeholder="End Date">
+    </p-datePicker>
+  </div>
+  <div class="col-12 md:col-3" *ngIf="this.filterBrands.length > 0">
+    <p-select
+      [options]="filterBrands"
+      optionLabel="label"
+      placeholder="Select Brand"
+      [(ngModel)]="filter.brandName">
+    </p-select>
+  </div>
+  <div class="col-12 md:col-3">
+    <p-select
+      [options]="platforms"
+      placeholder="Select Platform"
+      [(ngModel)]="filter.platform">
+    </p-select>
+  </div>
+
+  <div class="col-12 mt-2">
+    <div class="flex align-items-center gap-2">
+      <label>
+        <input type="checkbox" [(ngModel)]="filter.groupByBrand" />
+        Group by Brand
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="filter.groupByPlatform" />
+        Group by Platform
+      </label>
+      <label>
+        <input type="radio" name="groupByDate" value=""
+               [(ngModel)]="filter.groupByDate"> None
+      </label>
+      <label>
+        <input type="radio" name="groupByDate" value="day"
+               [(ngModel)]="filter.groupByDate"> Day
+      </label>
+      <label>
+        <input type="radio" name="groupByDate" value="week"
+               [(ngModel)]="filter.groupByDate"> Week
+      </label>
+      <label>
+        <input type="radio" name="groupByDate" value="month"
+               [(ngModel)]="filter.groupByDate"> Month
+      </label>
+      <label>
+        <input type="radio" name="groupByDate" value="year"
+               [(ngModel)]="filter.groupByDate"> Year
+      </label>
+      <button pButton label="Apply Filters" (click)="loadDashboardData()"></button>
+    </div>
+  </div>
+
+  <!-- KEY STATS CARDS -->
+  <div class="col-12 mt-3">
+    <div class="grid">
+      <div class="col-12 md:col-2">
+        <p-card header="Views">
+          <p>{{ summary.totalViews }}</p>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-2">
+        <p-card header="Likes">
+          <p>{{ summary.totalLikes }}</p>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-2">
+        <p-card header="Comments">
+          <p>{{ summary.totalComments }}</p>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-2">
+        <p-card header="Shares">
+          <p>{{ summary.totalShares }}</p>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-2">
+        <p-card header="Saves">
+          <p>{{ summary.totalSaves }}</p>
+        </p-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS SECTION -->
+  <div class="col-12 md:col-6 mt-4" *ngIf="barChartData">
+    <p-chart type="bar" [data]="barChartData"></p-chart>
+  </div>
+  <div class="col-12 md:col-6 mt-4" *ngIf="pieChartData">
+    <p-chart type="pie" [data]="pieChartData"></p-chart>
+  </div>
+  <div class="col-12 mt-4" *ngIf="lineChartData">
+    <p-chart type="line" [data]="lineChartData"></p-chart>
+  </div>
+
+  <!-- DETAILED TABLE -->
+  <div class="col-12 mt-4">
+    <p-table [value]="dashboardRows">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngIf="filter.groupByBrand">Brand</th>
+          <th *ngIf="filter.groupByPlatform">Platform</th>
+          <th *ngIf="filter.groupByDate">Date</th>
+          <th>Views</th>
+          <th>Likes</th>
+          <th>Comments</th>
+          <th>Shares</th>
+          <th>Saves</th>
+          <th>Posts Count</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-row>
+        <tr>
+          <td *ngIf="filter.groupByBrand">{{ row.brandName }}</td>
+          <td *ngIf="filter.groupByPlatform">{{ row.platform }}</td>
+          <td *ngIf="filter.groupByDate">{{ row.groupDate }}</td>
+          <td>{{ row.totalViews }}</td>
+          <td>{{ row.totalLikes }}</td>
+          <td>{{ row.totalComments }}</td>
+          <td>{{ row.totalShares }}</td>
+          <td>{{ row.totalSaves }}</td>
+          <td>{{ row.postCount }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

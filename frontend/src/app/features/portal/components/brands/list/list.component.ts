@@ -25,7 +25,6 @@ export class ListComponent {
   getBrands(): void {
     this.brandService.getBrands().subscribe(
       (response: any) => {
-        console.log('Brands:', response);
         this.brands = response;
       },
       (error) => {

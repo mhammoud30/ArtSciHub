@@ -6,7 +6,9 @@ import { CreateSocialMediaPostDto } from '../dtos/create-social-media-post.dto';
 import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 import { CreateSocialMediaPostProvider } from './create-social-media-post.provider';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
-import { GetSocialMediaPostDto } from './get-social-media-posts.dto';
+import { GetSocialMediaPostDto } from '../dtos/get-social-media-posts.dto';
+import { GetDashboardDataDto } from '../dtos/get-dashboard-data.dto';
+import { GetDashboardDataProvider } from './get-dashboard-data.provider';
 
 @Injectable()
 export class SocialMediaPostsService {
@@ -24,6 +26,10 @@ export class SocialMediaPostsService {
      * Injecting Pagination Provider
      */
     private readonly paginationProvider: PaginationProvider,
+    /**
+     * Inject the get dashboard data provider
+     */
+    private readonly dashboardDataProvider: GetDashboardDataProvider,
   ) {}
 
   public async create(
@@ -66,6 +72,13 @@ export class SocialMediaPostsService {
       meta,
       links,
     };
+  }
+
+  /**
+   * Get dashboard data
+   */
+  public async getDashboardData(query: GetDashboardDataDto) {
+    return this.dashboardDataProvider.getDashboardData(query);
   }
 
   /**

@@ -92,12 +92,15 @@
 
     <!-- User Profile Section -->
     <div class="user-profile">
-      <div class="avatar">
-        <img
+      <i class="fa-solid fa-user"></i>
+      <!--
+       <div class="avatar">
+         <img
           [src]="user?.avatarUrl || 'assets/images/default-avatar.png'"
           alt="User Avatar"
         />
       </div>
+      -->
       <div class="user-info" *ngIf="!isNavCollapsed">
         <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
       </div>
