@@ -73,7 +73,7 @@ export class AuthService {
 
   isUser(): boolean {
     const userData = this.userSubject.value;
-    return userData?.role === 'user';
+    return userData?.role === 'user' || userData?.role === 'admin';
   }
 
   isAdmin(): boolean {

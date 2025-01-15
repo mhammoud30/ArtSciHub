@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 
@@ -9,7 +14,7 @@ import { AuthService } from '../../../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -22,11 +27,11 @@ export class LoginComponent {
     /**
      * Inject the AuthService here
      */
-    private readonly authService: AuthService,
+    private readonly authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
@@ -42,20 +47,13 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe({
         next: (response) => {
           console.log('Login successful:', response);
-          // Redirect to a different page after successful login
-          if(this.authService.isAdmin()) {
-            this.router.navigate(['/admin']);
-          }
 
-          else if(this.authService.isUser()) {
-            this.router.navigate(['/portal/social-media-posts/create']);
-          }
-
+          this.router.navigate(['/portal/social-media-posts/create']);
         },
         error: (err) => {
           console.error('Login failed:', err);
           this.errorMessage = 'Invalid email or password. Please try again.';
-        }
+        },
       });
     }
   }

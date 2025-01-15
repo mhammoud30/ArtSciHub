@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SocialMediaPostService } from '../../../services/social-media-post.service';
-import { GetSocialMediaPostModel } from '../models/get-social-media-post.model';
+import { SocialMediaPostService } from '../../../../services/social-media-post.service';
+import { GetSocialMediaPostModel } from '../../models/get-social-media-post.model';
 import { CardModule } from 'primeng/card'; // p-card
 import { BadgeModule } from 'primeng/badge'; // p-badge
 import { PanelModule } from 'primeng/panel';

@@ -3,15 +3,30 @@
 
 // Animation Keyframes
 @keyframes data-stream {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100%); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 .portal-container {
@@ -20,6 +35,7 @@
   background: $primary-color;
   position: relative;
   overflow: hidden;
+  height: 100vh;
 }
 
 // Side Navigation
@@ -32,6 +48,7 @@
   flex-direction: column;
   position: relative;
   z-index: 10;
+  height: 100vh;
 
   &.collapsed {
     width: 80px;
@@ -127,12 +144,13 @@
           text-align: center;
         }
 
-        &:hover, &.active {
+        &:hover,
+        &.active {
           background: rgba($accent-color, 0.1);
           color: $accent-color;
 
           &::after {
-            content: '';
+            content: "";
             position: absolute;
             right: 0;
             top: 0;
@@ -181,7 +199,7 @@
       .role {
         color: rgba($secondary-color, 0.7);
         font-size: 0.8rem;
-        font-family: 'Courier New', monospace;
+        font-family: "Courier New", monospace;
       }
     }
   }
@@ -190,14 +208,19 @@
 // Main Content Area
 .main-content {
   flex: 1;
+  overflow-y: auto;
   transition: all 0.3s ease;
   position: relative;
-  background: linear-gradient(135deg, $primary-color, darken($primary-color, 3%));
+  background: linear-gradient(
+    135deg,
+    $primary-color,
+    darken($primary-color, 3%)
+  );
   overflow-x: hidden;
 
-  &.expanded {
-    margin-left: -180px;
-  }
+  // &.expanded {
+  // margin-left: -180px;
+  // }
 
   // Tech Grid Background
   .tech-grid {
@@ -206,8 +229,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image:
-      linear-gradient(90deg, rgba($tech-grid-color, 0.1) 1px, transparent 1px),
+    background-image: linear-gradient(
+        90deg,
+        rgba($tech-grid-color, 0.1) 1px,
+        transparent 1px
+      ),
       linear-gradient(0deg, rgba($tech-grid-color, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
     pointer-events: none;

@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import { SocialMediaPostService } from '../../../services/social-media-post.service';
-import { GetPaginatedPostsModel } from '../models/get-paginated-post.model';
-import { GetSocialMediaPostModel } from '../models/get-social-media-post.model';
+import { SocialMediaPostService } from '../../../../services/social-media-post.service';
+import { GetPaginatedPostsModel } from '../../models/get-paginated-post.model';
+import { GetSocialMediaPostModel } from '../../models/get-social-media-post.model';
+import { AuthService } from '../../../../../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -17,6 +19,7 @@ import { GetSocialMediaPostModel } from '../models/get-social-media-post.model';
 export class ListComponent implements OnInit {
   posts!: GetPaginatedPostsModel;
   errorMessage = '';
+  isAdmin = false;
 
   // Define default values for pagination
   currentPage = 1;      // 1-based page index
@@ -29,11 +32,15 @@ export class ListComponent implements OnInit {
 
   selectedPost?: GetSocialMediaPostModel;
 
-  constructor(private socialMediaPostService: SocialMediaPostService) {}
+  constructor(private socialMediaPostService: SocialMediaPostService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     // Initial load
     this.getPosts(this.itemsPerPage, this.currentPage);
+    this.isAdmin = this.authService.isAdmin();
   }
 
   // Updated signature: getPosts(page, limit)
@@ -74,5 +81,9 @@ export class ListComponent implements OnInit {
     console.log('Page change:', this.currentPage, this.itemsPerPage);
     console.log('Event:', event);
     this.getPosts(this.itemsPerPage, this.currentPage);
+  }
+
+  goToDashboard() {
+    this.router.navigate(['/portal/social-media-posts/dashboard']);
   }
 }

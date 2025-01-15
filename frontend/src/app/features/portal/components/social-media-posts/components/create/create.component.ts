@@ -1,29 +1,29 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { SocialMediaPostService } from '../../../services/social-media-post.service';
+import { SocialMediaPostService } from '../../../../services/social-media-post.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CreateSocialMediaPost } from '../models/create-social-media-post.model';
-import { Platform } from '../enums/platform.enum';
-import { Thumbnail } from '../enums/thumbnail.enum';
-import { Dimensions } from '../enums/dimensions.enum';
-import { Concept } from '../enums/concept.enum';
-import { CreativeType } from '../enums/creative-type.enum';
-import { Sound } from '../enums/sound.enum';
-import { TargetAudienceAge } from '../enums/target-audience-age.enum';
-import { Duration } from '../enums/duration.enum';
-import { Language } from '../enums/language.enum';
-import { ContentTone } from '../enums/content-tone.enum';
-import { CampaignObjective } from '../enums/campaign-objective.enum';
-import { BrandService } from '../../../services/brand.service';
-import { GetBrandsModel } from '../../brands/models/get-brands.model';
+import { CreateSocialMediaPost } from '../../models/create-social-media-post.model';
+import { Platform } from '../../enums/platform.enum';
+import { Thumbnail } from '../../enums/thumbnail.enum';
+import { Dimensions } from '../../enums/dimensions.enum';
+import { Concept } from '../../enums/concept.enum';
+import { CreativeType } from '../../enums/creative-type.enum';
+import { Sound } from '../../enums/sound.enum';
+import { TargetAudienceAge } from '../../enums/target-audience-age.enum';
+import { Duration } from '../../enums/duration.enum';
+import { Language } from '../../enums/language.enum';
+import { ContentTone } from '../../enums/content-tone.enum';
+import { CampaignObjective } from '../../enums/campaign-objective.enum';
+import { BrandService } from '../../../../services/brand.service';
+import { GetBrandsModel } from '../../../brands/models/get-brands.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CallToAction } from '../enums/call-to-action.enum';
+import { CallToAction } from '../../enums/call-to-action.enum';
 
 // Angular Material modules
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { TargetAudienceGender } from '../enums/target-audience-gender.enum';
-import { TargetAudienceIncome } from '../enums/target-audience-income.enum';
+import { TargetAudienceGender } from '../../enums/target-audience-gender.enum';
+import { TargetAudienceIncome } from '../../enums/target-audience-income.enum';
 
 @Component({
   selector: 'app-create',

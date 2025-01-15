@@ -1,4 +1,4 @@
-@use "../../../../../../styles.scss" as *;
+@use "../../../../../../../styles.scss" as *;
 
 .post-list-container {
   padding: 2rem;
@@ -26,25 +26,50 @@
     pointer-events: none;
   }
 
-  .post-list-title {
-    background: linear-gradient(45deg, $accent-color, $mint-color);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: bold;
-    font-size: 1.8rem;
+  .post-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 2rem;
-    letter-spacing: 1px;
-    text-align: center;
 
-    &::after {
-      content: "";
-      display: block;
-      width: 50px;
-      height: 2px;
-      background: $accent-color;
-      margin: 1rem auto;
-      box-shadow: 0 0 10px rgba($accent-color, 0.5);
+    .post-list-title {
+      background: linear-gradient(45deg, $accent-color, $mint-color);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+      font-size: 2.5rem;
+      margin: 0; // No bottom margin since flex container
+      letter-spacing: 1px;
+      // text-align: left;   // Keep it left so it lines up with the button
+
+      &::after {
+        content: "";
+        display: block;
+        width: 50px;
+        height: 2px;
+        background: $accent-color;
+        margin: 1rem 0 0 0;
+        box-shadow: 0 0 10px rgba($accent-color, 0.5);
+      }
+    }
+
+    /* 3) Style the button however you want */
+    .dashboard-button {
+      background-color: #fff;
+      color: $accent-color;
+      border: 1px solid rgba($accent-color, 0.3);
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba($accent-color, 0.1);
+        border-color: $accent-color;
+      }
     }
   }
 
@@ -91,7 +116,7 @@
       border-radius: 4px;
 
       &:hover {
-        background: linear-gradient(45deg, $accent-color, #78E6D0);
+        background: linear-gradient(45deg, $accent-color, #78e6d0);
       }
     }
 
@@ -181,7 +206,7 @@
 
     .post-list-table-container {
       padding: 0; // reduce padding for smaller screens
-      margin: 0;  // reduce margin for smaller screens
+      margin: 0; // reduce margin for smaller screens
     }
 
     .post-list-table {
@@ -235,13 +260,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1rem;  // Optional spacing from other elements
+  margin-bottom: 1rem; // Optional spacing from other elements
 
   label {
     font-weight: 500;
     color: $accent-color;
     text-transform: uppercase; // or remove if not desired
-    font-size: 0.9rem;         // adjust as needed
+    font-size: 0.9rem; // adjust as needed
   }
 
   select {

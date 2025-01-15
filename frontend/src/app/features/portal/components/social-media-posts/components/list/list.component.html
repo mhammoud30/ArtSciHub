@@ -1,5 +1,8 @@
 <div class="post-list-container">
-  <h2 class="post-list-title">Social Media Posts</h2>
+  <div class="post-list-header">
+    <h2 class="post-list-title">Social Media Posts</h2>
+    <button class="dashboard-button" *ngIf="isAdmin" (click)="goToDashboard()"><i class="fa-solid fa-chart-line"></i></button>
+  </div>
 
   <!-- Show error message (if any) -->
   <div *ngIf="errorMessage" class="error-message">
