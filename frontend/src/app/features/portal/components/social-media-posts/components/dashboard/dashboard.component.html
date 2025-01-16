@@ -1,140 +1,264 @@
-<div class="grid p-3">
-  <!-- FILTER SECTION -->
-  <div class="col-12 md:col-3">
-    <p-datePicker
-      [(ngModel)]="filter.startDate"
-      dateFormat="yy-mm-dd"
-      placeholder="Start Date">
-    </p-datePicker>
-  </div>
-  <div class="col-12 md:col-3">
-    <p-datePicker
-      [(ngModel)]="filter.endDate"
-      dateFormat="yy-mm-dd"
-      placeholder="End Date">
-    </p-datePicker>
-  </div>
-  <div class="col-12 md:col-3" *ngIf="this.filterBrands.length > 0">
-    <p-select
-      [options]="filterBrands"
-      optionLabel="label"
-      placeholder="Select Brand"
-      [(ngModel)]="filter.brandName">
-    </p-select>
-  </div>
-  <div class="col-12 md:col-3">
-    <p-select
-      [options]="platforms"
-      placeholder="Select Platform"
-      [(ngModel)]="filter.platform">
-    </p-select>
-  </div>
+<div class="dashboard-container p-3">
+  <!-- SIDEBAR FILTER SECTION -->
+  <aside class="filter-sidebar">
+    <h2>Filters</h2>
+    <div class="p-fluid">
+      <!-- Date Range -->
+      <div class="field">
+        <label for="startDate">Start Date</label>
+        <p-datePicker
+          id="startDate"
+          [(ngModel)]="filter.startDate"
+          dateFormat="yy-mm-dd"
+          placeholder="Start Date"
+        >
+        </p-datePicker>
+      </div>
+      <div class="field">
+        <label for="endDate">End Date</label>
+        <p-datePicker
+          id="endDate"
+          [(ngModel)]="filter.endDate"
+          dateFormat="yy-mm-dd"
+          placeholder="End Date"
+        >
+        </p-datePicker>
+      </div>
 
-  <div class="col-12 mt-2">
-    <div class="flex align-items-center gap-2">
-      <label>
-        <input type="checkbox" [(ngModel)]="filter.groupByBrand" />
-        Group by Brand
-      </label>
-      <label>
-        <input type="checkbox" [(ngModel)]="filter.groupByPlatform" />
-        Group by Platform
-      </label>
-      <label>
-        <input type="radio" name="groupByDate" value=""
-               [(ngModel)]="filter.groupByDate"> None
-      </label>
-      <label>
-        <input type="radio" name="groupByDate" value="day"
-               [(ngModel)]="filter.groupByDate"> Day
-      </label>
-      <label>
-        <input type="radio" name="groupByDate" value="week"
-               [(ngModel)]="filter.groupByDate"> Week
-      </label>
-      <label>
-        <input type="radio" name="groupByDate" value="month"
-               [(ngModel)]="filter.groupByDate"> Month
-      </label>
-      <label>
-        <input type="radio" name="groupByDate" value="year"
-               [(ngModel)]="filter.groupByDate"> Year
-      </label>
-      <button pButton label="Apply Filters" (click)="loadDashboardData()"></button>
+      <!-- Brand Select -->
+      <div class="field" *ngIf="filterBrands.length > 0">
+        <label for="brand">Select Brand</label>
+        <p-select
+          id="brand"
+          [options]="filterBrands"
+          placeholder="Select Brand"
+          [(ngModel)]="filter.brandName"
+        >
+        </p-select>
+      </div>
+
+      <!-- Platform Select -->
+      <div class="field">
+        <label for="platform">Select Platform</label>
+        <p-select
+          id="platform"
+          [options]="platforms"
+          placeholder="Select Platform"
+          [(ngModel)]="filter.platform"
+        >
+        </p-select>
+      </div>
+
+      <!-- Grouping Options -->
+      <div class="field-checkbox mt-2">
+        <p-checkbox
+          inputId="groupByBrand"
+          [(ngModel)]="filter.groupByBrand"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="groupByBrand">Group by Brand</label>
+      </div>
+      <div class="field-checkbox">
+        <p-checkbox
+          inputId="groupByPlatform"
+          [(ngModel)]="filter.groupByPlatform"
+          binary="true"
+        >
+        </p-checkbox>
+        <label for="groupByPlatform">Group by Platform</label>
+      </div>
+
+      <!-- Date Grouping Radios -->
+      <div class="group-by-date mt-3">
+        <label>Group by Date:</label>
+        <div class="field-radiobutton">
+          <p-radioButton
+            name="groupByDate"
+            inputId="none"
+            value=""
+            [(ngModel)]="filter.groupByDate"
+          >
+          </p-radioButton>
+          <label for="none">None</label>
+        </div>
+        <div class="field-radiobutton compact-radio-group" *ngFor="let opt of dateGroupOptions">
+          <p-radioButton
+            [name]="'groupByDate'"
+            [inputId]="opt"
+            [value]="opt"
+            [(ngModel)]="filter.groupByDate"
+          >
+          </p-radioButton>
+          <label [for]="opt">{{ opt | titlecase }}</label>
+        </div>
+      </div>
+
+      <!-- Apply Button -->
+      <div class="mt-3">
+        <button
+          pButton
+          label="Apply Filters"
+          (click)="loadEnhancedDashboardData()"
+        ></button>
+
+        <!-- Reset Filters Button -->
+        <button
+          pButton
+          label="Reset Filters"
+          (click)="resetFilters()"
+          class="reset-button"
+        ></button>
+      </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- KEY STATS CARDS -->
-  <div class="col-12 mt-3">
-    <div class="grid">
-      <div class="col-12 md:col-2">
-        <p-card header="Views">
-          <p>{{ summary.totalViews }}</p>
-        </p-card>
-      </div>
-      <div class="col-12 md:col-2">
-        <p-card header="Likes">
-          <p>{{ summary.totalLikes }}</p>
-        </p-card>
-      </div>
-      <div class="col-12 md:col-2">
-        <p-card header="Comments">
-          <p>{{ summary.totalComments }}</p>
-        </p-card>
-      </div>
-      <div class="col-12 md:col-2">
-        <p-card header="Shares">
-          <p>{{ summary.totalShares }}</p>
-        </p-card>
-      </div>
-      <div class="col-12 md:col-2">
-        <p-card header="Saves">
-          <p>{{ summary.totalSaves }}</p>
-        </p-card>
-      </div>
-    </div>
-  </div>
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-main">
+    <!-- OVERALL METRICS SECTION -->
+    <section class="metrics-section mb-3" *ngIf="summary">
+      <p-card header="Overall Metrics" class="metrics-card">
+        <div
+          class="p-grid p-nogutter p-dir-col p-dir-md-row p-justify-center p-align-center"
+        >
+          <!-- TOTAL VIEWS -->
+          <div class="metrics-item" *ngIf="summary.totalViews !== null">
+            <div class="metrics-content">
+              <div class="metrics-main">
+                <div class="metrics-icon">
+                  <i class="fa-solid fa-eye"></i>
+                </div>
+                <div class="metrics-value">
+                  {{ summary.totalViews | shortNumber }}
+                </div>
+              </div>
+              <div class="metrics-label">Total Views</div>
+            </div>
+          </div>
 
-  <!-- CHARTS SECTION -->
-  <div class="col-12 md:col-6 mt-4" *ngIf="barChartData">
-    <p-chart type="bar" [data]="barChartData"></p-chart>
-  </div>
-  <div class="col-12 md:col-6 mt-4" *ngIf="pieChartData">
-    <p-chart type="pie" [data]="pieChartData"></p-chart>
-  </div>
-  <div class="col-12 mt-4" *ngIf="lineChartData">
-    <p-chart type="line" [data]="lineChartData"></p-chart>
-  </div>
+          <!-- TOTAL LIKES   -->
+          <div class="metrics-item" *ngIf="summary.totalLikes !== null">
+            <div class="metrics-content">
+              <div class="metrics-main">
+                <div class="metrics-icon">
+                  <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="metrics-value">
+                  {{ summary.totalLikes | shortNumber }}
+                </div>
+              </div>
+              <div class="metrics-label">Total Likes</div>
+            </div>
+          </div>
 
-  <!-- DETAILED TABLE -->
-  <div class="col-12 mt-4">
-    <p-table [value]="dashboardRows">
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngIf="filter.groupByBrand">Brand</th>
-          <th *ngIf="filter.groupByPlatform">Platform</th>
-          <th *ngIf="filter.groupByDate">Date</th>
-          <th>Views</th>
-          <th>Likes</th>
-          <th>Comments</th>
-          <th>Shares</th>
-          <th>Saves</th>
-          <th>Posts Count</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-row>
-        <tr>
-          <td *ngIf="filter.groupByBrand">{{ row.brandName }}</td>
-          <td *ngIf="filter.groupByPlatform">{{ row.platform }}</td>
-          <td *ngIf="filter.groupByDate">{{ row.groupDate }}</td>
-          <td>{{ row.totalViews }}</td>
-          <td>{{ row.totalLikes }}</td>
-          <td>{{ row.totalComments }}</td>
-          <td>{{ row.totalShares }}</td>
-          <td>{{ row.totalSaves }}</td>
-          <td>{{ row.postCount }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+          <!-- TOTAL COMMENTS -->
+          <div class="metrics-item" *ngIf="summary.totalComments !== null">
+            <div class="metrics-content">
+              <div class="metrics-main">
+                <div class="metrics-icon">
+                  <i class="fa-solid fa-comment"></i>
+                </div>
+                <div class="metrics-value">
+                  {{ summary.totalComments | shortNumber }}
+                </div>
+              </div>
+              <div class="metrics-label">Total Comments</div>
+            </div>
+          </div>
+
+          <!-- TOTAL SHARES -->
+          <div class="metrics-item" *ngIf="summary.totalShares !== null">
+            <div class="metrics-content">
+              <div class="metrics-main">
+                <div class="metrics-icon">
+                  <i class="fa-solid fa-share"></i>
+                </div>
+                <div class="metrics-value">
+                  {{ summary.totalShares | shortNumber }}
+                </div>
+              </div>
+              <div class="metrics-label">Total Shares</div>
+            </div>
+          </div>
+
+          <!-- TOTAL SAVES -->
+          <div class="metrics-item" *ngIf="summary.totalSaves !== null">
+            <div class="metrics-content">
+              <div class="metrics-main">
+                <div class="metrics-icon">
+                  <i class="fa-solid fa-bookmark"></i>
+                </div>
+                <div class="metrics-value">
+                  {{ summary.totalSaves | shortNumber }}
+                </div>
+              </div>
+              <div class="metrics-label">Total Saves</div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </section>
+
+    <!-- CHARTS SECTION -->
+    <section class="charts-section">
+      <!-- Multi-Series Line Chart -->
+      <div class="chart-wrapper" *ngIf="multiSeriesLineData">
+        <p-card>
+          <p-chart
+            type="line"
+            [data]="multiSeriesLineData"
+            [options]="lineChartOptions"
+          ></p-chart>
+        </p-card>
+      </div>
+
+      <!-- Stacked Bar Chart -->
+      <div class="chart-wrapper" *ngIf="stackedBarData">
+        <p-card>
+          <p-chart
+            type="bar"
+            [data]="stackedBarData"
+            [options]="stackedBarChartOptions"
+          >
+          </p-chart>
+        </p-card>
+      </div>
+
+      <!-- Radar Chart -->
+      <div class="chart-wrapper" *ngIf="radarChartData">
+        <p-card header="Radar Chart (Brand Interactions)">
+          <p-chart
+            type="radar"
+            [data]="radarChartData"
+            [options]="radarChartOptions"
+          >
+          </p-chart>
+        </p-card>
+      </div>
+
+      <!-- Polar Area Chart -->
+      <div class="chart-wrapper" *ngIf="polarAreaData">
+        <p-card header="Polar Area Chart (Platform Distribution)">
+          <p-chart
+            type="polarArea"
+            [data]="polarAreaData"
+            [options]="polarAreaChartOptions"
+          >
+          </p-chart>
+        </p-card>
+      </div>
+
+      <!-- Bubble/Scatter Chart (Something Different) -->
+      <div class="chart-wrapper" *ngIf="bubbleChartData">
+        <p-card header="Bubble Chart (Performance)">
+          <p-chart
+            type="bubble"
+            [data]="bubbleChartData"
+            [options]="bubbleChartOptions"
+          >
+          </p-chart>
+        </p-card>
+      </div>
+    </section>
+  </main>
 </div>

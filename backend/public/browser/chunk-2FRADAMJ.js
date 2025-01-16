@@ -1,0 +1,1 @@
+import{s as a}from"./chunk-D3LPHSJ7.js";import{Lb as t,aa as o}from"./chunk-GG2QCC6U.js";import"./chunk-4CLCTAJ7.js";var m=class e{static \u0275fac=function(n){return new(n||e)};static \u0275cmp=o({type:e,selectors:[["app-analyze"]],standalone:!0,features:[t],decls:0,vars:0,template:function(n,s){},dependencies:[a]})};export{m as AnalyzeComponent};

@@ -1,0 +1,1 @@
+import"./chunk-4CLCTAJ7.js";var t=[{path:"",loadComponent:()=>import("./chunk-CMDF6SJR.js").then(o=>o.HomeComponent)},{path:"login",loadComponent:()=>import("./chunk-ETJ23QWE.js").then(o=>o.LoginComponent)}];export{t as PUBLIC_ROUTES};

@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
                 preset: Aura
             }
         }),
-    importProvidersFrom(MatSnackBarModule), provideAnimationsAsync(), // Import Snackbar module
+    importProvidersFrom(), provideAnimationsAsync(), // Import Snackbar module
   ]
 };
 

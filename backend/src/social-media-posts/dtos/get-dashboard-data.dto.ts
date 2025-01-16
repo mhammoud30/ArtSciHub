@@ -180,7 +180,7 @@ export class GetDashboardDataDto {
    */
   @IsOptional()
   @IsString() // Could be an enum as well
-  groupByDate?: 'day' | 'week' | 'month' | 'year';
+  groupByDate?: '' | 'day' | 'week' | 'month' | 'year';
 
   /**
    * If you want to combine multiple group-bys in one array,
